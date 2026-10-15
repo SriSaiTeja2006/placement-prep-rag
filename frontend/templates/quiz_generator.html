@@ -1,0 +1,183 @@
+<div class="view-header">
+    <div>
+        <h2><i data-lucide="clipboard-list" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"></i> Quiz Generator</h2>
+        <p>Test your placement readiness with dynamic, notes-grounded assessment quizzes.</p>
+        <div class="hero-badges">
+            <span class="hero-badge">✓ AI Generated</span>
+            <span class="hero-badge">✓ Multiple Formats</span>
+            <span class="hero-badge">✓ Performance Tracking</span>
+        </div>
+    </div>
+    <div class="hero-illustration"><i data-lucide="clipboard-list" style="width: 64px; height: 64px; opacity: 0.85;"></i></div>
+</div>
+
+<!-- Statistics Grid -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-label">Quizzes Completed</span>
+        <div class="stat-value" id="quiz-stat-completed">6</div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Average Accuracy</span>
+        <div class="stat-value" id="quiz-stat-accuracy">82%</div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Weak Topics Detected</span>
+        <div class="stat-value" id="quiz-stat-weak" style="color: var(--danger-rose);">2</div>
+    </div>
+</div>
+
+<div class="view-grid">
+    <!-- Left Column: Quiz Configuration -->
+    <div class="panel-left glass-card">
+        <div class="panel-section">
+            <h3>Configure Quiz</h3>
+            
+            <div class="input-group">
+                <label for="quiz-file-select">Select Notes File</label>
+                <select id="quiz-file-select">
+                    <option value="">All Indexed Notes (Search term required)</option>
+                    <!-- Populated dynamically -->
+                </select>
+            </div>
+
+            <div class="input-group" style="margin-top: 10px;">
+                <label for="quiz-subject-input">Topic / Subject (Optional if file is selected)</label>
+                <input type="text" id="quiz-subject-input" placeholder="e.g. Operating Systems, DBMS">
+            </div>
+            
+            <div class="input-row" style="margin-top: 10px;">
+                <div class="input-group">
+                    <label for="quiz-difficulty">Difficulty</label>
+                    <select id="quiz-difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="quiz-count">Questions</label>
+                    <select id="quiz-count">
+                        <option value="3">3 Questions</option>
+                        <option value="5" selected>5 Questions</option>
+                        <option value="10">10 Questions</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-top: 10px;">
+                <label for="quiz-type">Question Style</label>
+                <select id="quiz-type">
+                    <option value="multiple_choice" selected>Multiple Choice (MCQ)</option>
+                    <option value="true_false">True / False</option>
+                    <option value="fill_blanks">Fill in the Blanks</option>
+                    <option value="short_answer">Short Answer</option>
+                    <option value="coding_concept">Coding Concept Quiz</option>
+                    <option value="mix">Mixed Formats</option>
+                </select>
+            </div>
+
+            <button id="quiz-generate-btn" class="generate-plan-btn" style="margin-top: 16px;">
+                <i data-lucide="clipboard-list" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Start Practice Quiz
+            </button>
+        </div>
+
+        <!-- Progress/Stats Sidebar Section -->
+        <div class="panel-section separator-top" id="quiz-sidebar-stats">
+            <h3>Quiz Session</h3>
+            <div class="quiz-stat-card">
+                <span class="stat-label">Elapsed Time:</span>
+                <span class="stat-value" id="quiz-timer" style="color: var(--primary-blue); font-weight:700;">00:00</span>
+            </div>
+            <div class="quiz-stat-card" style="margin-top: 8px;">
+                <span class="stat-label">Score:</span>
+                <span class="stat-value" id="quiz-score-val" style="color: var(--success-green); font-weight:700;">0 / 0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Interactive Quiz Area -->
+    <div class="panel-right glass-card quiz-panel-content scroll-styled">
+        <!-- Loader -->
+        <div id="quiz-loader" class="questions-loader-wrapper hidden">
+            <div class="spinner"></div>
+            <p>Creating assessment questions from your notes context...</p>
+        </div>
+
+        <!-- Initial Screen -->
+        <div id="quiz-intro-screen" class="quiz-screen-container">
+            <div class="quiz-status-icon"><i data-lucide="pen-tool" style="width: 48px; height: 48px;"></i></div>
+            <h3>Test Your Understanding</h3>
+            <p>Configure a subject search query on the left. The AI will extract relevant snippets from your uploaded class notes and design customized test questions grounded solely in those materials.</p>
+        </div>
+
+        <!-- Active Question Screen -->
+        <div id="quiz-active-screen" class="quiz-screen-container hidden">
+            <div class="quiz-progress-bar-wrapper">
+                <div id="quiz-progress-bar" class="progress-bar" style="width: 0%;"></div>
+            </div>
+            
+            <div class="question-header">
+                <span class="question-number-badge" id="quiz-q-num">Question 1 of 5</span>
+                <span class="difficulty-badge" id="quiz-q-diff">Medium</span>
+            </div>
+
+            <div class="question-text-container">
+                <h3 id="quiz-question-text">Question contents go here?</h3>
+            </div>
+
+            <!-- Choices container (for MCQ / TF) -->
+            <div id="quiz-options-list" class="quiz-options-grid">
+                <!-- Dynamically loaded options buttons -->
+            </div>
+
+            <!-- Text entry container (for Fill-Blanks / Short Answer) -->
+            <div id="quiz-text-answer-container" class="input-group hidden">
+                <label for="quiz-text-input">Your Answer</label>
+                <div class="chat-input-wrapper">
+                    <input type="text" id="quiz-text-input" placeholder="Type your answer here..." style="width: 100%;">
+                    <button id="quiz-text-submit-btn" class="send-btn">➔</button>
+                </div>
+            </div>
+
+            <!-- Answer Explanation Card (hidden until user submits answer) -->
+            <div id="quiz-feedback-card" class="quiz-feedback-box hidden">
+                <h4 id="quiz-feedback-title">Correct!</h4>
+                <p id="quiz-feedback-text">Explanation details...</p>
+            </div>
+
+            <div class="quiz-nav-row">
+                <button id="quiz-next-btn" class="generate-plan-btn hidden" style="margin-top: 20px; width: auto; align-self: flex-end;">
+                    Next Question ➔
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="quiz-results-screen" class="quiz-screen-container hidden">
+            <div class="quiz-status-icon" id="quiz-res-icon"><i data-lucide="trophy" style="width: 48px; height: 48px;"></i></div>
+            <h3 id="quiz-res-title">Quiz Completed!</h3>
+            <h2 id="quiz-res-score" style="color: var(--primary-blue); font-weight:700; margin: 10px 0;">Score: 4 / 5</h2>
+            <p id="quiz-res-feedback">Excellent job! You have a solid grasp of this topic.</p>
+            
+            <div class="quiz-history-section separator-top" style="width: 100%; margin-top: 30px;">
+                <h3>Quiz Performance History</h3>
+                <div class="indexed-files-container" style="max-height: 180px;">
+                    <table class="quiz-history-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Difficulty</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quiz-history-tbody">
+                            <!-- Filled dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

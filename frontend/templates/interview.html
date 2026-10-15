@@ -1,0 +1,206 @@
+<div class="ip-root">
+  <div class="ip-container">
+
+  <!-- Hero -->
+  <div class="ip-hero">
+    <div class="ip-hero-left">
+      <div class="ip-hero-title">
+        <i data-lucide="message-square" style="width:20px;height:20px;"></i>
+        Interview Preparation
+      </div>
+      <div class="ip-hero-sub">Prepare for placement tests and interviews — grounded in real experiences, not just PDFs you may not have.</div>
+      <div class="ip-badges">
+        <span class="ip-badge">✓ Real Company Experience</span>
+        <span class="ip-badge">✓ Historical Trends</span>
+        <span class="ip-badge">✓ Targeted Grounding</span>
+        <span class="ip-badge">✓ No File Required</span>
+      </div>
+    </div>
+    <div class="ip-hero-icon">
+      <i data-lucide="message-circle" style="width:20px;height:20px;"></i>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="ip-stats">
+    <div class="ip-stat">
+      <div class="ip-stat-label">Indexed Companies</div>
+      <div class="ip-stat-value ip-mono" id="ip-stat-companies">0</div>
+    </div>
+    <div class="ip-stat">
+      <div class="ip-stat-label">Logged Q&As</div>
+      <div class="ip-stat-value ip-mono" id="ip-stat-qas">0</div>
+    </div>
+    <div class="ip-stat">
+      <div class="ip-stat-label">Experience Reports</div>
+      <div class="ip-stat-value ip-mono" id="ip-stat-reports">0</div>
+    </div>
+    <div class="ip-stat">
+      <div class="ip-stat-label">Your Readiness</div>
+      <div class="ip-stat-value ip-mono accent" id="ip-stat-readiness">—</div>
+      <div class="ip-stat-sub" id="ip-stat-readiness-sub">Add an experience to start scoring</div>
+    </div>
+  </div>
+
+  <div class="ip-grid">
+    <!-- LEFT PANEL -->
+    <div>
+      <div class="ip-panel">
+        <h3>Add Interview Experience</h3>
+
+        <div class="ip-tabs" id="ip-tabs">
+          <div class="ip-tab active" data-tab="paste">Paste Text</div>
+          <div class="ip-tab" data-tab="fetch">Auto-Research</div>
+          <div class="ip-tab" data-tab="upload">Upload File</div>
+        </div>
+
+        <!-- Shared fields -->
+        <div class="ip-row2">
+          <div class="ip-field">
+            <span class="ip-label">Company Name</span>
+            <input class="ip-input" id="ip-company-input" placeholder="e.g. TCS, Amazon">
+          </div>
+          <div class="ip-field">
+            <span class="ip-label">Role</span>
+            <input class="ip-input" id="ip-role-input" placeholder="e.g. SDE-1, Analyst">
+          </div>
+        </div>
+        <div class="ip-field">
+          <span class="ip-label">Round Type</span>
+          <input class="ip-input" id="ip-round-input" placeholder="e.g. Technical, Coding, HR">
+        </div>
+
+        <!-- Tab: Paste Text (default) -->
+        <div class="ip-tabpanel" id="ip-panel-paste">
+          <div class="ip-field">
+            <span class="ip-label">Describe what you remember</span>
+            <textarea class="ip-textarea" id="ip-paste-textarea" placeholder="e.g. First round was an aptitude test — 20 min, quant + logical reasoning. Second round was technical: asked to reverse a linked list..."></textarea>
+          </div>
+          <button class="ip-btn ip-btn-primary" id="ip-paste-submit">Log This Experience</button>
+        </div>
+
+        <!-- Tab: Auto-Research -->
+        <div class="ip-tabpanel ip-hidden" id="ip-panel-fetch">
+          <div class="ip-fetchbox">
+            <span class="ip-label" style="color:#2E6E5C;">Let AI search for it</span>
+            <div class="ip-hint">No PDF? No problem. The AI can search recent placement forums, interview reviews, and campus reports for this company + role, then summarize the common rounds and question patterns for you to verify.</div>
+          </div>
+          <button class="ip-btn ip-btn-accent" id="ip-research-submit">
+            <i data-lucide="search" style="width:14px;height:14px;vertical-align:middle;margin-right:6px;"></i>
+            Research & Auto-Fill
+          </button>
+          <!-- Research result preview -->
+          <div class="ip-hidden" id="ip-research-preview" style="margin-top:12px;">
+            <span class="ip-label">Research Result — Review & Edit</span>
+            <textarea class="ip-textarea" id="ip-research-textarea" style="min-height:120px;"></textarea>
+            <button class="ip-btn ip-btn-primary" id="ip-research-save">Save This Research</button>
+          </div>
+        </div>
+
+        <!-- Tab: Upload File -->
+        <div class="ip-tabpanel ip-hidden" id="ip-panel-upload">
+          <div class="ip-dropzone" id="ip-upload-dropzone">
+            <i data-lucide="file-text" style="width:20px;height:20px;margin-bottom:6px;"></i><br>
+            Drag & drop Experience PDF/TXT or <span class="ip-link">browse</span>
+            <input type="file" id="ip-file-input" accept=".pdf,.txt" class="ip-hidden" multiple>
+          </div>
+          <button class="ip-btn ip-btn-ghost" id="ip-upload-btn" style="margin-top:10px;">Upload File</button>
+        </div>
+
+        <!-- Upload Progress & Messages (shared) -->
+        <div class="ip-progress-container ip-hidden" id="ip-upload-progress">
+          <div class="ip-progress-bar-wrapper">
+            <div class="ip-progress-bar" id="ip-progress-bar"></div>
+          </div>
+          <div class="ip-progress-text" id="ip-progress-text">Processing... 0%</div>
+        </div>
+        <div class="ip-alert ip-hidden" id="ip-alert-message"></div>
+      </div>
+
+      <!-- Company Filter & Indexed Experiences -->
+      <div class="ip-panel" style="margin-top:16px;">
+        <h3>Company Search Filter</h3>
+        <span class="ip-label">Scope Chat Grounding</span>
+        <select class="ip-select" id="ip-company-filter">
+          <option value="">All Companies (No filter)</option>
+        </select>
+        <div class="ip-stat-sub" style="margin-top:6px;">Queries will prioritize knowledge matching this company.</div>
+
+        <hr class="ip-divider">
+        <h3>Indexed Experiences</h3>
+        <div id="ip-files-loader" class="ip-hidden" style="text-align:center;padding:8px;">
+          <i data-lucide="loader-2" style="width:16px;height:16px;animation:spin 1s linear infinite;"></i>
+        </div>
+        <div class="ip-explist" id="ip-exp-list">
+          <div class="ip-empty">No interview experiences indexed yet.</div>
+        </div>
+        <div class="ip-stat-sub" style="text-align:center;margin-top:10px;" id="ip-exp-summary"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div>
+      <!-- Chat Panel -->
+      <div class="ip-panel">
+        <div class="ip-chat-head">
+          <div class="ip-chat-title">
+            <div class="icon">
+              <i data-lucide="message-square" style="width:16px;height:16px;"></i>
+            </div>
+            <div>
+              <div style="font-weight:700;font-size:13.5px;">Interview Assistant</div>
+              <div class="ip-status"><span class="ip-dot"></span>Active & Ready</div>
+            </div>
+          </div>
+          <div class="ip-chat-actions">
+            <button class="ip-mini-btn" id="ip-mock-btn">
+              <i data-lucide="timer" style="width:14px;height:14px;"></i> Mock Interview
+            </button>
+            <button class="ip-mini-btn" id="ip-clear-chat">
+              <i data-lucide="trash-2" style="width:14px;height:14px;"></i> Clear chat
+            </button>
+          </div>
+        </div>
+
+        <div class="ip-chat-body" id="ip-chat-history">
+          <div class="ip-msg">
+            <div class="av"><i data-lucide="bot" style="width:14px;height:14px;"></i></div>
+            <div class="ip-bubble">Welcome to Interview Prep! You don't need a PDF to get started — paste what you remember, or ask me to research a company for you. Select a filter on the left to ground this chat.</div>
+          </div>
+        </div>
+
+        <div class="ip-chips" id="ip-chips">
+          <span class="ip-chip">What DSA questions does TCS ask?</span>
+          <span class="ip-chip">Research Infosys interview rounds</span>
+          <span class="ip-chip">Behavioral tips for freshers</span>
+          <span class="ip-chip">Common HR questions</span>
+        </div>
+
+        <div class="ip-inputbar">
+          <textarea id="ip-chat-input" placeholder="Ask about company interviews... (e.g., What DSA questions does Amazon ask?)" rows="1"></textarea>
+          <button class="ip-send" id="ip-send-btn" disabled>
+            <i data-lucide="send" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Flashcard Review -->
+      <div class="ip-panel" style="margin-top:16px;">
+        <div class="ip-flash-toggle-row">
+          <h3 style="margin:0;">Flashcard Review — Logged Q&As</h3>
+          <span class="ip-stat-sub" id="ip-flash-total">0 cards</span>
+        </div>
+        <div class="ip-flashcard" id="ip-flashcard">
+          <div class="tag">No cards yet</div>
+          <div class="q">Add interview experiences to generate review flashcards</div>
+        </div>
+        <div class="ip-flash-nav">
+          <button id="ip-flash-prev">← Prev</button>
+          <button id="ip-flash-next">Next →</button>
+        </div>
+        <div class="ip-flash-count" id="ip-flash-count">Card 0 of 0</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

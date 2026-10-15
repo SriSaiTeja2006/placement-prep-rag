@@ -1,0 +1,324 @@
+<div class="notes-page-wrapper">
+    <style>
+        /* Scoped style overrides for Notes Q&A Page */
+
+        /* 1. Prevent parent main-content from scrolling and force flex column layout */
+        .main-content:has(.notes-page-wrapper) {
+            height: 100vh !important;
+            max-height: 100vh !important;
+            overflow: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 24px 30px 24px 30px !important; /* Lock padding to avoid double scrollbars */
+            box-sizing: border-box !important;
+        }
+
+        /* 2. Constrain the view-container wrapper */
+        .view-container:has(.notes-page-wrapper) {
+            height: 100% !important;
+            max-height: 100% !important;
+            min-height: 0 !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+        }
+
+        /* 3. Notes view wrapper style */
+        .notes-page-wrapper {
+            display: flex !important;
+            flex-direction: column !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            min-height: 0 !important;
+            width: 100% !important;
+            overflow: hidden !important;
+        }
+
+        /* 4. Fixed view header at the top */
+        .notes-page-wrapper .view-header {
+            flex-shrink: 0 !important;
+            margin-bottom: 16px !important;
+        }
+
+        /* 5. Main view grid layout fills remaining height */
+        .notes-page-wrapper .view-grid {
+            display: grid !important;
+            grid-template-columns: 360px 1fr !important;
+            gap: 24px !important;
+            flex: 1 !important;
+            min-height: 0 !important;
+            height: 100% !important;
+            margin-bottom: 0 !important;
+            overflow: hidden !important;
+        }
+
+        /* 6. Document Panel (Left Column) */
+        .notes-page-wrapper .panel-left {
+            height: 100% !important;
+            max-height: 100% !important;
+            overflow-y: auto !important;
+            min-height: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 7. Chat Panel (Right Column) */
+        .notes-page-wrapper .panel-right.chat-panel {
+            height: 100% !important;
+            max-height: 100% !important;
+            min-height: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+            padding: 0 !important; /* Remove inner panel padding to maximize chat space */
+            box-sizing: border-box !important;
+        }
+
+        /* 8. Chat sub-elements flex sizing */
+        .notes-page-wrapper .chat-header {
+            flex-shrink: 0 !important;
+            padding: 16px 20px !important;
+            border-bottom: 1px solid var(--border-color) !important;
+        }
+
+        .notes-page-wrapper #notes-chat-history {
+            flex: 1 !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            min-height: 0 !important;
+            padding: 20px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+            box-sizing: border-box !important;
+        }
+
+        .notes-page-wrapper #notes-suggestions {
+            flex-shrink: 0 !important;
+            padding: 12px 20px !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+            border-top: 1px solid var(--border-color) !important;
+            background: var(--bg-surface-subtle) !important;
+        }
+
+        .notes-page-wrapper .chat-input-container {
+            flex-shrink: 0 !important;
+            padding: 16px 20px !important;
+            border-top: 1px solid var(--border-color) !important;
+            background: var(--bg-surface) !important;
+        }
+
+        /* 9. Message bubble consistent width and line-wrapping */
+        .notes-page-wrapper .message-container {
+            max-width: 85% !important;
+            width: fit-content !important;
+            word-break: break-word !important;
+            overflow-wrap: anywhere !important;
+        }
+
+        .notes-page-wrapper .message-bubble-wrapper {
+            max-width: 100% !important;
+            word-break: break-word !important;
+            overflow-wrap: anywhere !important;
+        }
+
+        .notes-page-wrapper .message-bubble {
+            word-break: break-word !important;
+            overflow-wrap: anywhere !important;
+            white-space: pre-wrap !important;
+        }
+
+        /* 10. Prevent code snippets/pre/code tags from causing horizontal scrolls */
+        .notes-page-wrapper .message-bubble pre,
+        .notes-page-wrapper .message-bubble code {
+            white-space: pre-wrap !important;
+            word-break: break-word !important;
+            overflow-wrap: anywhere !important;
+            max-width: 100% !important;
+        }
+
+        /* Responsive styling for Tablet and Mobile views */
+        @media (max-width: 1024px) {
+            .main-content:has(.notes-page-wrapper) {
+                padding: 16px !important;
+                height: 100vh !important;
+            }
+
+            .notes-page-wrapper .view-grid {
+                grid-template-columns: 1fr !important;
+                grid-template-rows: auto 1fr !important;
+                gap: 16px !important;
+                height: calc(100% - 120px) !important; /* Subtract header space */
+            }
+
+            .notes-page-wrapper .panel-left {
+                max-height: 220px !important; /* Limit document panel size */
+                padding: 16px !important;
+                overflow-y: auto !important;
+                flex-shrink: 0 !important;
+                border-bottom: 1px solid var(--border-color) !important;
+            }
+
+            .notes-page-wrapper .panel-right.chat-panel {
+                flex: 1 !important;
+                min-height: 0 !important;
+                border-top: none !important;
+            }
+
+            .notes-page-wrapper .upload-dropzone {
+                padding: 12px !important;
+                gap: 8px !important;
+            }
+
+            .notes-page-wrapper .upload-icon i {
+                width: 22px !important;
+                height: 22px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Account for fixed mobile header in app layout */
+            .main-content:has(.notes-page-wrapper) {
+                height: calc(100vh - var(--header-height, 60px)) !important;
+                max-height: calc(100vh - var(--header-height, 60px)) !important;
+            }
+            
+            .notes-page-wrapper {
+                height: 100% !important;
+            }
+            
+            .notes-page-wrapper .view-grid {
+                height: calc(100% - 90px) !important;
+            }
+
+            .notes-page-wrapper .panel-left {
+                max-height: 180px !important;
+            }
+        }
+    </style>
+
+    <div class="view-header">
+        <div>
+            <h2><i data-lucide="notebook-pen" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"></i> Notes Q&A</h2>
+            <p>Ask questions grounded in your uploaded lecture notes and study material.</p>
+            <div class="hero-badges">
+                <span class="hero-badge">✓ AI Powered</span>
+                <span class="hero-badge">✓ RAG Grounded</span>
+                <span class="hero-badge">✓ Reference Citations</span>
+            </div>
+        </div>
+        <div class="view-header-stats">
+            <div class="header-stat">
+                <span class="stat-number" id="notes-stat-count">0</span>
+                <span class="stat-label">notes</span>
+            </div>
+            <div class="header-stat">
+                <span class="stat-number" id="notes-stat-pages">0</span>
+                <span class="stat-label">pages</span>
+            </div>
+            <div class="header-stat">
+                <span class="stat-number" id="notes-stat-asked">0</span>
+                <span class="stat-label">asked</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="view-grid">
+        <!-- Left Column: Document Panel -->
+        <div class="panel-left glass-card">
+            <div class="panel-section">
+                <h3>Upload study material</h3>
+                <div id="notes-dropzone" class="upload-dropzone">
+                    <span class="upload-icon" style="display: inline-flex; align-items: center; justify-content: center;"><i data-lucide="upload" style="width: 28px; height: 28px;"></i></span>
+                    <p>Drag & drop PDF/TXT files here or <span class="browse-link">browse</span></p>
+                    <input type="file" id="notes-file-input" accept=".pdf,.txt" class="hidden-file-input" multiple>
+                </div>
+                
+                <div id="notes-upload-progress" class="upload-progress-container hidden">
+                    <div class="progress-bar-wrapper">
+                        <div id="notes-progress-bar" class="progress-bar"></div>
+                    </div>
+                    <div class="progress-status">
+                        <span id="notes-progress-text">Uploading... 0%</span>
+                    </div>
+                </div>
+
+                <div id="notes-upload-message" class="alert-message hidden"></div>
+            </div>
+
+            <div class="panel-section separator-top">
+                <div class="panel-section-header">
+                    <h3>Currently indexed notes</h3>
+                    <span id="notes-file-count-badge" class="file-count-badge">0 files</span>
+                </div>
+                <div class="search-input-wrapper" style="margin-bottom: 10px;">
+                    <span class="search-icon"><i data-lucide="search" style="width: 14px; height: 14px;"></i></span>
+                    <input type="text" id="notes-search-input" placeholder="Search indexed notes...">
+                </div>
+                <div class="indexed-files-container">
+                    <div id="notes-files-loader" class="mini-loader hidden"></div>
+                    <ul id="notes-indexed-files" class="indexed-files-list">
+                        <!-- Loaded dynamically via API -->
+                        <li class="empty-list-msg">No files indexed yet. Upload notes to begin!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Chat Panel -->
+        <div class="panel-right glass-card chat-panel">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-header-avatar" style="display: inline-flex; align-items: center; justify-content: center;"><i data-lucide="bot" style="width: 24px; height: 24px;"></i></div>
+                    <div class="chat-header-details">
+                        <h4>Notes Assistant</h4>
+                        <span class="status" id="notes-grounding-status">Grounded in 0 sources</span>
+                    </div>
+                </div>
+                <div class="chat-header-actions">
+                    <button id="notes-clear-chat" class="chat-header-btn">
+                        <i data-lucide="trash-2" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px;"></i> Clear chat
+                    </button>
+                </div>
+            </div>
+
+            <div id="notes-chat-history" class="chat-history scroll-styled">
+                <div class="ai-message message-container">
+                    <div class="message-avatar" style="display: inline-flex; align-items: center; justify-content: center;"><i data-lucide="bot" style="width: 20px; height: 20px;"></i></div>
+                    <div class="message-bubble-wrapper">
+                        <div class="message-bubble">
+                            Hi! Upload your notes in the left panel, and then ask me anything. I will cite the source document and page number for every answer.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggested Questions -->
+            <div class="suggested-questions" id="notes-suggestions">
+                <button class="suggested-q-chip" data-q="Explain deadlock in OS">Explain deadlock in OS</button>
+                <button class="suggested-q-chip" data-q="Normalization in DBMS">Normalization in DBMS</button>
+                <button class="suggested-q-chip" data-q="TCP vs UDP">TCP vs UDP</button>
+                <button class="suggested-q-chip" data-q="Quicksort complexity">Quicksort complexity</button>
+            </div>
+
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <span style="padding: 0 4px 0 8px; color: var(--text-secondary); display: inline-flex; align-items: center;"><i data-lucide="pen-line" style="width: 18px; height: 18px;"></i></span>
+                    <textarea id="notes-chat-input" placeholder="Ask a question about your notes... (e.g., Explain virtual memory)" rows="1"></textarea>
+                    <button id="notes-send-btn" class="send-btn" disabled>
+                        <span class="send-icon">➔</span>
+                    </button>
+                </div>
+                <div class="chat-input-hint">
+                    Enter to send · Shift+Enter for new line · Answers cite the source document and page
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

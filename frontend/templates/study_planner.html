@@ -1,0 +1,182 @@
+<div class="sp-root" id="spRoot">
+
+  <!-- Hero -->
+  <div class="sp-hero">
+    <div>
+      <div class="sp-hero-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Study Planner
+      </div>
+      <div class="sp-hero-sub">Get a customized daily study schedule, revision guidelines, and target company preparation milestones.</div>
+      <div class="sp-badges">
+        <span class="sp-badge">✓ Customized Schedule</span>
+        <span class="sp-badge">✓ Milestone Timelines</span>
+        <span class="sp-badge">✓ Company Milestones</span>
+        <span class="sp-badge">✓ Daily Checklist</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="sp-stats">
+    <div class="sp-stat">
+      <div class="sp-stat-label">Daily Study Hours</div>
+      <div class="sp-stat-value sp-mono" id="plan-stat-hours">— Hrs</div>
+    </div>
+    <div class="sp-stat">
+      <div class="sp-stat-label">Active Tasks Today</div>
+      <div class="sp-stat-value sp-mono" id="plan-stat-goals">— Active</div>
+    </div>
+    <div class="sp-stat">
+      <div class="sp-stat-label">Active Streak</div>
+      <div class="sp-stat-value amber sp-mono" id="plan-stat-streak">0 Days</div>
+    </div>
+    <div class="sp-stat">
+      <div class="sp-stat-label">Today's Progress</div>
+      <div class="sp-stat-value accent sp-mono" id="plan-stat-progress">0%</div>
+    </div>
+  </div>
+
+  <div class="sp-grid">
+    <!-- LEFT COLUMN -->
+    <div>
+      <div class="sp-panel">
+        <h3>Plan Parameters</h3>
+        <div class="sp-field">
+          <span class="sp-label">Exam Date</span>
+          <input type="date" class="sp-input" id="plan-date-input" required>
+        </div>
+        <div class="sp-field">
+          <span class="sp-label">Subjects / Core Topics</span>
+          <input class="sp-input" id="plan-subjects-input" placeholder="e.g. Operating Systems, SQL, DSA" required>
+        </div>
+        <div class="sp-row2">
+          <div class="sp-field">
+            <span class="sp-label">Daily Hours</span>
+            <input type="number" class="sp-input" id="plan-hours-input" min="1" max="16" value="4" required>
+          </div>
+          <div class="sp-field">
+            <span class="sp-label">Target Company</span>
+            <input class="sp-input" id="plan-company-input" placeholder="e.g. Amazon (optional)">
+          </div>
+        </div>
+        <div class="sp-field">
+          <span class="sp-label">Weak Areas / Priorities</span>
+          <input class="sp-input" id="plan-weak-input" placeholder="e.g. B+ Trees, Virtual Memory" required>
+        </div>
+        <button class="sp-btn" id="plan-generate-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Generate Study Plan
+        </button>
+      </div>
+
+      <!-- Weak Area Priority List -->
+      <div class="sp-panel">
+        <h3>Weak Area Priority</h3>
+        <div class="sp-weakgrid" id="plan-weak-areas-list">
+          <!-- Populated dynamically -->
+          <span class="sp-weak-pill" style="font-style: italic; color: var(--muted); font-size: 11px;">No weak areas added yet.</span>
+        </div>
+      </div>
+
+      <!-- Weekly Goals Panel -->
+      <div class="sp-panel sp-hidden" id="plan-weekly-goals-panel">
+        <h3>Weekly Goals</h3>
+        <ul class="sp-bullet-list" id="plan-weekly-goals">
+          <!-- Populated dynamically -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <!-- Loader -->
+      <div id="plan-loader" class="sp-panel sp-hidden">
+        <div class="sp-spinner"></div>
+        <h4 style="font-weight: 700; text-align: center; margin-bottom: 8px;">Formulating Study Plan...</h4>
+        <p style="color: var(--muted); text-align: center; font-size: 13px;">Analyzing target company experiences and notes to construct your customized roadmap...</p>
+      </div>
+
+      <!-- Initial Intro Screen -->
+      <div id="plan-intro-screen" class="sp-panel">
+        <div style="text-align: center; padding: 30px 20px;">
+          <div style="font-size: 40px; margin-bottom: 12px; color: var(--primary);">📅</div>
+          <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">Structured Exam Preparation</h3>
+          <p style="color: var(--muted); font-size: 13px; max-width: 440px; margin: 0 auto; line-height: 1.5;">
+            Enter your exam parameters and weak subjects on the left. The AI will create a detailed daily study checklist, revision goals, and specific interview preparation tasks if a target company is specified.
+          </p>
+        </div>
+      </div>
+
+      <!-- Active Dashboard Screen -->
+      <div id="plan-active-screen" class="sp-hidden">
+        
+        <!-- Countdown & Milestone Timeline -->
+        <div class="sp-panel">
+          <div class="sp-countdown">
+            <div class="num sp-mono" id="plan-countdown-val">0</div>
+            <div class="txt" id="plan-countdown-txt">days until exam — plan covers study hours across multiple goals</div>
+          </div>
+
+          <h3 style="margin-bottom:4px;">Milestone Timeline</h3>
+          <div class="sp-timeline">
+            <div class="track">
+              <div class="fill" id="plan-timeline-fill"></div>
+              
+              <div class="sp-milestone" style="left:5%;" id="ms-1">1</div>
+              <div class="sp-milestone-label" style="left:5%;">Core Concepts</div>
+              
+              <div class="sp-milestone" style="left:38%;" id="ms-2">2</div>
+              <div class="sp-milestone-label" style="left:38%;">Practice & Revise</div>
+              
+              <div class="sp-milestone" style="left:68%;" id="ms-3">3</div>
+              <div class="sp-milestone-label" style="left:68%;" id="ms-3-label">Company Prep</div>
+              
+              <div class="sp-milestone" style="left:96%;" id="ms-4">4</div>
+              <div class="sp-milestone-label" style="left:96%;">Exam Day</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Today's Checklist -->
+        <div class="sp-panel">
+          <h3 id="plan-dash-title" style="margin-bottom: 4px;">Study Checklist</h3>
+          <p id="plan-dash-meta" style="font-size: 12px; color: var(--muted); margin-bottom: 14px;">Plan parameters</p>
+          
+          <div class="sp-day-tabs" id="plan-day-tabs">
+            <!-- Populated dynamically -->
+          </div>
+
+          <div class="sp-progress-row">
+            <span class="sp-label" id="plan-progress-txt" style="margin:0;">0 of 0 done</span>
+            <div class="sp-progress-bar"><div class="sp-progress-fill" id="plan-progress-fill"></div></div>
+          </div>
+
+          <div id="plan-daily-tasks">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Insights & Motivation -->
+        <div class="sp-panel" id="plan-insights-panel">
+          <h3>AI Planner Insights & Motivation</h3>
+          <ul class="sp-bullet-list" id="plan-tips-list">
+            <!-- Populated dynamically -->
+          </ul>
+          <div class="sp-motivation" id="plan-motivation-quote">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

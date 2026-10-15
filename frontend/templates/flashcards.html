@@ -1,0 +1,152 @@
+<div class="view-header">
+    <div>
+        <h2><i data-lucide="brain" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"></i> Flashcards</h2>
+        <p>Memorize placement key concepts via interactive flashcards generated from your study notes.</p>
+        <div class="hero-badges">
+            <span class="hero-badge">✓ Spaced Repetition</span>
+            <span class="hero-badge">✓ Active Recall</span>
+            <span class="hero-badge">✓ Auto Generated Decks</span>
+        </div>
+    </div>
+    <div class="hero-illustration"><i data-lucide="brain" style="width: 64px; height: 64px; opacity: 0.85;"></i></div>
+</div>
+
+<!-- Statistics Grid -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-label">Total Cards Generated</span>
+        <div class="stat-value" id="fc-stat-total">35</div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Starred Favorites</span>
+        <div class="stat-value" id="fc-stat-favorites" style="color: var(--warning-amber);">4</div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Mastered Concepts</span>
+        <div class="stat-value" id="fc-stat-mastered" style="color: var(--success-green);">18</div>
+    </div>
+</div>
+
+<div class="view-grid">
+    <!-- Left Column: Settings and Progress -->
+    <div class="panel-left glass-card">
+        <div class="panel-section">
+            <h3>Configure Deck</h3>
+            
+            <div class="input-group">
+                <label for="fc-subject-input">Topic / Subject</label>
+                <input type="text" id="fc-subject-input" placeholder="e.g. Virtual Memory, Normalization" required>
+            </div>
+            
+            <div class="input-group" style="margin-top: 10px;">
+                <label for="fc-count">Number of Cards</label>
+                <select id="fc-count">
+                    <option value="5">5 Cards</option>
+                    <option value="10" selected>10 Cards</option>
+                    <option value="15">15 Cards</option>
+                </select>
+            </div>
+
+            <button id="fc-generate-btn" class="generate-plan-btn" style="margin-top: 16px;">
+                <i data-lucide="brain" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Create Study Deck
+            </button>
+        </div>
+
+        <!-- Sidebar deck stats -->
+        <div class="panel-section separator-top" id="fc-sidebar-stats">
+            <h3>Deck Overview</h3>
+            <div class="quiz-stat-card">
+                <span class="stat-label">Progress:</span>
+                <span class="stat-value" id="fc-progress-txt" style="color: var(--primary-blue); font-weight:700;">0 / 0</span>
+            </div>
+            <div class="quiz-stat-card" style="margin-top: 8px;">
+                <span class="stat-label">Learned:</span>
+                <span class="stat-value" id="fc-learned-count" style="color: var(--success-green); font-weight:700;">0</span>
+            </div>
+            <div class="quiz-stat-card" style="margin-top: 8px;">
+                <span class="stat-label">Starred:</span>
+                <span class="stat-value" id="fc-starred-count" style="color: var(--warning-amber); font-weight:700;">0</span>
+            </div>
+            
+            <div class="fc-controls-row" style="margin-top: 15px; display: flex; gap: 8px;">
+                <button id="fc-shuffle-btn" class="chat-action-btn" style="flex: 1; justify-content: center;" disabled>
+                    <i data-lucide="shuffle" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px;"></i> Shuffle
+                </button>
+                <button id="fc-review-mode-btn" class="chat-action-btn" style="flex: 1; justify-content: center;" disabled>
+                    <i data-lucide="star" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px;"></i> Review Starred
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Interactive Flip Card -->
+    <div class="panel-right glass-card flashcard-panel-content scroll-styled">
+        <!-- Loader -->
+        <div id="fc-loader" class="questions-loader-wrapper hidden">
+            <div class="spinner"></div>
+            <p>Scanning note files and formulating flashcard concepts...</p>
+        </div>
+
+        <!-- Initial Screen -->
+        <div id="fc-intro-screen" class="quiz-screen-container">
+            <div class="quiz-status-icon"><i data-lucide="brain" style="width: 48px; height: 48px;"></i></div>
+            <h3>Active Recall & Spaced Repetition</h3>
+            <p>Generate study decks from your notes. Click the card to flip it, mark concepts as learned, or star them to study separately in review mode.</p>
+        </div>
+
+        <!-- Active Flashcard Screen -->
+        <div id="fc-active-screen" class="quiz-screen-container hidden" style="flex: 1; display: flex; flex-direction: column;">
+            <div class="quiz-progress-bar-wrapper">
+                <div id="fc-progress-bar" class="progress-bar" style="width: 0%;"></div>
+            </div>
+
+            <!-- The Flashcard Container (3D Flip Scene) -->
+            <div class="fc-scene">
+                <div class="fc-card" id="fc-card-element">
+                    <!-- Front Side -->
+                    <div class="fc-card-face fc-card-front">
+                        <div class="fc-card-header">
+                            <span>Concept Question</span>
+                            <div class="fc-card-badges">
+                                <button class="fc-star-btn" id="fc-star-btn" title="Star this card"><i data-lucide="star" style="width: 16px; height: 16px;"></i></button>
+                            </div>
+                        </div>
+                        <div class="fc-card-body">
+                            <h2 id="fc-front-text" style="color: var(--text-primary);">Front Text</h2>
+                        </div>
+                        <div class="fc-card-footer">
+                            <span>Click Card to Reveal Answer <i data-lucide="mouse-pointer" style="width: 14px; height: 14px; vertical-align: middle; margin-left: 4px;"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Back Side -->
+                    <div class="fc-card-face fc-card-back">
+                        <div class="fc-card-header">
+                            <span>Explanation / Answer</span>
+                            <div class="fc-card-badges">
+                                <button class="fc-check-btn" id="fc-check-btn" title="Mark as learned"><i data-lucide="check" style="width: 16px; height: 16px;"></i></button>
+                            </div>
+                        </div>
+                        <div class="fc-card-body scroll-styled">
+                            <p id="fc-back-text" style="color: var(--text-secondary);">Back Text</p>
+                        </div>
+                        <div class="fc-card-footer">
+                            <span>Click Card to Flip Back <i data-lucide="mouse-pointer" style="width: 14px; height: 14px; vertical-align: middle; margin-left: 4px;"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="fc-nav-controls">
+                <button id="fc-prev-btn" class="chat-action-btn">
+                    <i data-lucide="arrow-left" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;"></i> Previous
+                </button>
+                <span id="fc-card-indicator" style="font-weight: 500; font-size: 14px;">Card 1 of 10</span>
+                <button id="fc-next-btn" class="chat-action-btn">
+                    Next <i data-lucide="arrow-right" style="width: 14px; height: 14px; vertical-align: middle; margin-left: 4px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,225 @@
+/* ==========================================================================
+   PLACEMENT PREP RAG ASSISTANT - RESPONSIVE DESIGN STYLESHEET (UPGRADED)
+   ========================================================================== */
+
+/* Show mobile header only on mobile views */
+.mobile-header {
+    display: none;
+    height: var(--header-height);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500;
+    align-items: center;
+    padding: 0 16px;
+    gap: 16px;
+}
+
+.sidebar-toggle-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    padding: 0;
+}
+
+.hamburger-bar {
+    width: 20px;
+    height: 2px;
+    background-color: var(--text-primary);
+    border-radius: 2px;
+    transition: var(--transition-fast);
+}
+
+.mobile-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   TABLET LAYOUT (Max width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .view-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        overflow-y: auto;
+    }
+    
+    .panel-left {
+        max-height: none;
+        overflow-y: visible;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .panel-right {
+        overflow-y: visible;
+        min-height: 450px;
+    }
+    
+    .chat-panel {
+        height: 550px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    /* Stack view header stats on tablet */
+    .view-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .view-header-stats {
+        align-self: flex-start;
+    }
+
+    /* Dashboard welcome card responsive */
+    .dash-welcome-card {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .dash-welcome-metrics {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Planner grid single column on tablet */
+    .planner-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   MOBILE LAYOUT (Max width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Enable mobile header */
+    .mobile-header {
+        display: flex;
+    }
+    
+    .app-container {
+        flex-direction: column;
+        padding-top: var(--header-height);
+    }
+    
+    /* Collapsible Sidebar positioning */
+    .sidebar {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        height: calc(100vh - var(--header-height));
+        transform: translateX(-100%);
+        box-shadow: none;
+        width: 280px;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 10px 0 30px rgba(15, 23, 42, 0.15);
+    }
+
+    /* Adjust main content for mobile top bar padding */
+    .main-content {
+        padding: 16px;
+    }
+
+    .view-header h2 {
+        font-size: 22px;
+    }
+
+    .view-header-stats {
+        gap: 8px;
+    }
+
+    .header-stat {
+        padding: 6px 12px;
+        min-width: 55px;
+    }
+
+    .header-stat .stat-number {
+        font-size: 18px;
+    }
+
+    .panel-left {
+        padding: 16px;
+    }
+
+    .panel-right {
+        padding: 16px 0;
+        min-height: 380px;
+    }
+    
+    .chat-panel {
+        height: 480px;
+    }
+
+    .chat-history {
+        padding: 16px;
+    }
+
+    .chat-input-container {
+        padding: 12px 16px;
+    }
+
+    .chat-header {
+        padding: 12px 16px;
+    }
+
+    .suggested-questions {
+        padding: 0 16px;
+    }
+
+    .message-container {
+        max-width: 90%;
+    }
+
+    /* Modal adjustments */
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    /* Dashboard stat grid single column on mobile */
+    .view-grid[style*="1fr 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Flashcard responsiveness */
+    .fc-scene {
+        height: 260px;
+    }
+
+    .fc-card-front h2 {
+        font-size: 18px;
+    }
+}
+
+/* ===== Statistics Grid Responsiveness ===== */
+@media (max-width: 900px) {
+    .stats-grid, .resume-stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+}
+@media (max-width: 500px) {
+    .stats-grid, .resume-stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+}

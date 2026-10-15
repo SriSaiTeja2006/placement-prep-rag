@@ -1,0 +1,68 @@
+<div class="view-header">
+    <h2><i data-lucide="trending-up" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"></i> Progress Dashboard</h2>
+    <p>Monitor your study goals, evaluate test metrics, and track placement readiness.</p>
+</div>
+
+<div class="resume-layout">
+    <!-- Top Stat Widgets Grid -->
+    <div class="view-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px;">
+        <div class="glass-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 0 6px var(--accent-purple));"><i data-lucide="notebook-pen" style="width: 32px; height: 32px; color: var(--accent-purple);"></i></span>
+            <span class="stat-label">Topics Indexed</span>
+            <span class="stat-value" id="prog-topics-val" style="font-size: 22px;">0 Topics</span>
+        </div>
+        <div class="glass-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 0 6px var(--accent-blue));"><i data-lucide="clipboard-check" style="width: 32px; height: 32px; color: var(--accent-blue);"></i></span>
+            <span class="stat-label">Quizzes Completed</span>
+            <span class="stat-value" id="prog-quizzes-val" style="font-size: 22px;">0 Played</span>
+        </div>
+        <div class="glass-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 0 6px var(--accent-cyan));"><i data-lucide="brain" style="width: 32px; height: 32px; color: var(--accent-cyan);"></i></span>
+            <span class="stat-label">Cards Reviewed</span>
+            <span class="stat-value" id="prog-cards-val" style="font-size: 22px;">0 Cards</span>
+        </div>
+        <div class="glass-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 0 6px orange);"><i data-lucide="flame" style="width: 32px; height: 32px; color: orange;"></i></span>
+            <span class="stat-label">Study Streak</span>
+            <span class="stat-value" id="prog-streak-val" style="font-size: 22px; color: orange;">0 Days</span>
+        </div>
+    </div>
+
+    <!-- Core Breakdown Grid -->
+    <div class="view-grid" style="grid-template-columns: 1.2fr 1fr; gap: 20px;">
+        <!-- Left Panel: Subject Progress Bars -->
+        <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+            <h3>Subject Preparation Levels</h3>
+            <p class="subtitle">Estimated readiness metrics based on quiz scores and task list checklist completions.</p>
+            
+            <div id="prog-subject-list" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
+                <!-- Dynamically loaded progress bars -->
+            </div>
+        </div>
+
+        <!-- Right Panel: Strengths & Weaknesses -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Strong Subjects -->
+            <div class="glass-card" style="padding: 20px; flex: 1;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <span style="display: inline-flex; align-items: center;"><i data-lucide="target" style="width: 20px; height: 20px; color: var(--success-teal);"></i></span>
+                    <h4 style="font-weight: 600;">Strong Areas (&gt;85% score)</h4>
+                </div>
+                <ul class="planner-bullet-list" id="prog-strong-list">
+                    <!-- Filled dynamically -->
+                </ul>
+            </div>
+
+            <!-- Weak Subjects -->
+            <div class="glass-card" style="padding: 20px; flex: 1;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <span style="display: inline-flex; align-items: center;"><i data-lucide="alert-triangle" style="width: 20px; height: 20px; color: var(--warning-amber);"></i></span>
+                    <h4 style="font-weight: 600;">Priority Improvement Areas</h4>
+                </div>
+                <ul class="planner-bullet-list" id="prog-weak-list" style="color: #f87171;">
+                    <!-- Filled dynamically -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

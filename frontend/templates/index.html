@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Prep RAG Assistant</title>
+    <meta name="description" content="AI-powered placement preparation assistant with RAG-based Q&A, quizzes, flashcards, interview prep, and study planning.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', path='css/variables.css') }}?v=1.3">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}?v=1.3">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/sidebar.css') }}?v=1.3">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/chat.css') }}?v=1.3">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/responsive.css') }}?v=1.3">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/learning_modules.css') }}?v=1.3">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/interview.css') }}?v=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/assignment.css') }}?v=1.0">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Animated background mesh for depth */
+        .app-container::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+        }
+        .sidebar, .main-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <button id="sidebar-toggle" class="sidebar-toggle-btn" aria-label="Toggle Navigation">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
+            <h1 class="mobile-title">Placement Prep RAG</h1>
+        </header>
+
+        <!-- Sidebar -->
+        <aside id="app-sidebar" class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-container">
+                    <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#2563EB" />
+                        <path d="M 8,7 h 8 a 2,2 0 0 1 2,2 v 6 a 2,2 0 0 1 -2,2 H 11 l -3,3 v -3 a 2,2 0 0 1 -2,-2 v -6 a 2,2 0 0 1 2,-2 z" fill="white" />
+                        <path d="M 9.5,12 L 11.5,14 L 14.5,10" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h2>Placement Prep AI</h2>
+                    <div class="logo-subtext">
+                        <span>RAG Assistant</span>
+                        <div class="online-indicator">
+                            <span class="dot"></span>
+                            <span>Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <!-- Dashboard Section -->
+                <ul class="nav-section-list">
+                    <li class="nav-item active" data-view="dashboard">
+                        <span class="nav-icon-wrapper">
+                            <i data-lucide="layout-dashboard"></i>
+                        </span>
+                        <span class="nav-text">Dashboard</span>
+                    </li>
+                </ul>
+
+                <!-- Learning Section (Collapsible) -->
+                <div class="nav-section" id="section-learning">
+                    <div class="nav-section-title" onclick="toggleSection('learning')">
+                        <span>Learning</span>
+                        <svg class="section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    <ul class="nav-section-items">
+                        <li class="nav-item" data-view="notes">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="notebook-pen"></i>
+                            </span>
+                            <span class="nav-text">Notes Q&A</span>
+                        </li>
+                        <li class="nav-item" data-view="ai_tutor">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="bot"></i>
+                            </span>
+                            <span class="nav-text">AI Tutor</span>
+                        </li>
+                        <li class="nav-item" data-view="quiz_generator">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="circle-help"></i>
+                            </span>
+                            <span class="nav-text">Quiz Generator</span>
+                        </li>
+                        <li class="nav-item" data-view="flashcards">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="brain"></i>
+                            </span>
+                            <span class="nav-text">Flashcards</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Placement Section (Collapsible) -->
+                <div class="nav-section" id="section-placement">
+                    <div class="nav-section-title" onclick="toggleSection('placement')">
+                        <span>Placement</span>
+                        <svg class="section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    <ul class="nav-section-items">
+                        <li class="nav-item" data-view="interview">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="message-square"></i>
+                            </span>
+                            <span class="nav-text">Interview Prep</span>
+                        </li>
+                        <li class="nav-item" data-view="resume">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="file-check"></i>
+                            </span>
+                            <span class="nav-text">Resume Mapper</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Assignments Section (Collapsible) -->
+                <div class="nav-section" id="section-assignments">
+                    <div class="nav-section-title" onclick="toggleSection('assignments')">
+                        <span>Assignments</span>
+                        <svg class="section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    <ul class="nav-section-items">
+                        <li class="nav-item" data-view="assignment">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="clipboard-list"></i>
+                            </span>
+                            <span class="nav-text">Assignment Helper</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Planning Section (Collapsible) -->
+                <div class="nav-section" id="section-planning">
+                    <div class="nav-section-title" onclick="toggleSection('planning')">
+                        <span>Planning</span>
+                        <svg class="section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    <ul class="nav-section-items">
+                        <li class="nav-item" data-view="study_planner">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="calendar-days"></i>
+                            </span>
+                            <span class="nav-text">Study Planner</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Analytics Section (Collapsible) -->
+                <div class="nav-section" id="section-analytics">
+                    <div class="nav-section-title" onclick="toggleSection('analytics')">
+                        <span>Analytics</span>
+                        <svg class="section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    <ul class="nav-section-items">
+                        <li class="nav-item" data-view="analytics">
+                            <span class="nav-icon-wrapper">
+                                <i data-lucide="chart-column"></i>
+                            </span>
+                            <span class="nav-text">AI Analytics</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Sticky Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="nav-label">CONTROL PANEL</div>
+                <div class="settings-panel">
+                    <div class="settings-item" id="open-settings-btn">
+                        <span class="nav-icon-wrapper">
+                            <i data-lucide="settings"></i>
+                        </span>
+                        <span class="settings-text">Settings</span>
+                    </div>
+                </div>
+                
+                <button id="clear-session-btn" class="clear-btn outline-red">
+                    <span class="nav-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                    </span>
+                    <span class="btn-text">Clear Session</span>
+                </button>
+                
+                <div class="sidebar-version-tag">
+                    Version 1.0
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Theme Toggle Widget (Top Bar Alignment) -->
+            <div class="top-theme-bar">
+                <div class="theme-toggle-container" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
+                    <button class="theme-btn active" id="theme-btn-light">
+                        <span class="theme-icon">☀️</span> Light
+                    </button>
+                    <button class="theme-btn" id="theme-btn-dark">
+                        <span class="theme-icon">🌙</span> Dark
+                    </button>
+                </div>
+            </div>
+
+            <div id="view-container" class="view-container">
+                <!-- Views will be loaded dynamically here -->
+                <div class="loading-view">
+                    <div class="spinner"></div>
+                    <p>Initializing Assistant...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Settings Modal (Glassmorphic) -->
+        <div id="settings-modal" class="modal-overlay hidden">
+            <div class="modal-content glass-card">
+                <div class="modal-header">
+                    <h3>System Settings</h3>
+                    <button id="close-settings-btn" class="close-modal-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="setting-group">
+                        <label>RAG Model Generation</label>
+                        <select id="setting-model" disabled>
+                            <option>llama-3.3-70b-versatile (Groq)</option>
+                        </select>
+                        <span class="setting-help">Configured in backend settings.py</span>
+                    </div>
+                    <div class="setting-group">
+                        <label>Local Embeddings Model</label>
+                        <input type="text" value="all-MiniLM-L6-v2" disabled>
+                        <span class="setting-help">SentenceTransformers local embedder.</span>
+                    </div>
+                    <div class="setting-group">
+                        <label>Developer Mode</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="dev-mode-check">
+                            <label for="dev-mode-check"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('placement-prep-theme', theme);
+            
+            const btnLight = document.getElementById('theme-btn-light');
+            const btnDark = document.getElementById('theme-btn-dark');
+            if (btnLight && btnDark) {
+                if (theme === 'dark') {
+                    btnLight.classList.remove('active');
+                    btnDark.classList.add('active');
+                } else {
+                    btnDark.classList.remove('active');
+                    btnLight.classList.add('active');
+                }
+            }
+            window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        // Initialize Theme detection immediately to prevent flashing
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('placement-prep-theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else {
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
+            }
+        })();
+
+        function toggleSection(secId) {
+            const el = document.getElementById('section-' + secId);
+            if (el) {
+                el.classList.toggle('collapsed');
+                localStorage.setItem('sidebar-section-' + secId, el.classList.contains('collapsed') ? 'collapsed' : 'expanded');
+            }
+        }
+
+        function initializeSidebar() {
+            // Sync toggle button UI
+            const activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            setTheme(activeTheme);
+
+            // Load collapsible sections state
+            const sections = ['learning', 'placement', 'assignments', 'planning', 'analytics'];
+            sections.forEach(secId => {
+                const el = document.getElementById('section-' + secId);
+                if (el) {
+                    const state = localStorage.getItem('sidebar-section-' + secId);
+                    if (state === 'collapsed') {
+                        el.classList.add('collapsed');
+                    }
+                }
+            });
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            } else {
+                console.error('Lucide library not loaded!');
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeSidebar);
+        } else {
+            initializeSidebar();
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', path='js/app.js') }}" defer></script>
+</body>
+</html>

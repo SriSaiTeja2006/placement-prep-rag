@@ -1,0 +1,22 @@
+# Virtual environment
+.venv/
+venv/
+
+# Secrets - NEVER commit this
+.env
+
+# Generated data
+chroma_db/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+
+# Personal uploaded data (remove this line if you want sample data public)
+data/raw/resumes/
+
+# Large / copyrighted / personal data
+data/raw/**/*.pdf
+data/analytics_logs.json

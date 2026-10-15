@@ -1,0 +1,33 @@
+[
+  {
+    "question": "What is a process in operating systems?",
+    "expected_source_contains": "operating_systems",
+    "collection": "notes",
+    "relevant_keywords": ["process", "program", "execution", "PCB"]
+  },
+  {
+    "question": "Explain ACID properties in DBMS.",
+    "expected_source_contains": "dbms",
+    "collection": "notes",
+    "relevant_keywords": ["atomicity", "consistency", "isolation", "durability", "ACID"]
+  },
+  {
+    "question": "What is the difference between TCP and UDP?",
+    "expected_source_contains": "networking",
+    "collection": "notes",
+    "relevant_keywords": ["TCP", "UDP", "connection", "reliable"]
+  },
+  {
+    "question": "What is polymorphism in OOP?",
+    "expected_source_contains": "oops",
+    "collection": "notes",
+    "relevant_keywords": ["polymorphism", "inheritance", "overriding", "overloading"]
+  },
+  {
+    "question": "What DSA topics does Amazon ask in interviews?",
+    "expected_source_contains": "amazon",
+    "collection": "interview_experiences",
+    "relevant_keywords": ["amazon", "arrays", "trees", "dynamic programming"],
+    "metadata_filter": {"company": "Amazon"}
+  }
+]

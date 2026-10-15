@@ -1,0 +1,161 @@
+<div class="ah-root">
+
+  <!-- Hero -->
+  <div class="ah-hero">
+    <div>
+      <div class="ah-hero-title">
+        <i data-lucide="clipboard-list" style="width:20px;height:20px;margin-right:4px;"></i>
+        Assignment Helper
+      </div>
+      <div class="ah-hero-sub">Get high-level conceptual approaches and pseudocode mapped to your own lecture notes — without academic integrity violations.</div>
+      <div class="ah-badges">
+        <span class="ah-badge">✓ Academic Integrity</span>
+        <span class="ah-badge">✓ Concept Explanations</span>
+        <span class="ah-badge">✓ Logic Mapping</span>
+        <span class="ah-badge">✓ Notes-Grounded</span>
+      </div>
+    </div>
+    <div class="ah-hero-icon">
+      <i data-lucide="award" style="width:20px;height:20px;"></i>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="ah-stats">
+    <div class="ah-stat">
+      <div class="ah-stat-label">Assignments Assisted</div>
+      <div class="ah-stat-value ah-mono" id="ah-stat-assisted">0</div>
+    </div>
+    <div class="ah-stat">
+      <div class="ah-stat-label">Mapped Core Concepts</div>
+      <div class="ah-stat-value ah-mono" id="ah-stat-concepts">0</div>
+    </div>
+    <div class="ah-stat">
+      <div class="ah-stat-label">Average Difficulty</div>
+      <div class="ah-stat-value" id="ah-stat-difficulty">—</div>
+    </div>
+    <div class="ah-stat">
+      <div class="ah-stat-label">Notes Uploaded</div>
+      <div class="ah-stat-value ah-mono" id="ah-stat-uploaded">0</div>
+    </div>
+  </div>
+
+  <div class="ah-grid">
+    <!-- LEFT: Course notes + history -->
+    <div>
+      <div class="ah-panel">
+        <h3>Course Notes</h3>
+        <div class="sub">Ground the explanation in your own lecture material instead of generic answers.</div>
+        
+        <div class="ah-dropzone" id="ah-upload-dropzone">
+          <i data-lucide="upload" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></i>
+          Drag &amp; drop lecture notes (PDF/TXT) or <span class="ah-link">browse</span>
+          <input type="file" id="ah-file-input" accept=".pdf,.txt" class="ah-hidden" multiple>
+        </div>
+
+        <div style="margin-top:10px;">
+          <span class="ah-label">Or type a topic/unit name</span>
+          <input class="ah-input" id="ah-unit-input" placeholder="e.g. Unit 4 — Concurrency &amp; Semaphores">
+        </div>
+
+        <!-- Ingest progress and messages -->
+        <div class="ah-progress-container ah-hidden" id="ah-upload-progress">
+          <div class="ah-progress-bar-wrapper">
+            <div class="ah-progress-bar" id="ah-progress-bar"></div>
+          </div>
+          <div class="ah-progress-text" id="ah-progress-text">Processing... 0%</div>
+        </div>
+        <div class="ah-alert ah-hidden" id="ah-alert-message"></div>
+      </div>
+
+      <div class="ah-panel">
+        <h3>Recent Assignments</h3>
+        <div class="sub">Reopen a past conceptual plan.</div>
+        <div class="ah-history-list" id="ah-history-list">
+          <div class="ah-empty">No recent assignments.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Problem input + solution -->
+    <div>
+      <div class="ah-panel">
+        <h3>Problem Statement</h3>
+        <div class="sub">Paste the full prompt of your homework or coding assignment below.</div>
+        <textarea class="ah-textarea" id="ah-problem-input" placeholder="Paste your problem details here... (e.g. Write a program to implement a thread-safe producer-consumer queue using semaphores)"></textarea>
+
+        <!-- Hint level slider -->
+        <div class="ah-hintbox">
+          <div class="ah-hint-title">
+            <i data-lucide="alert-circle" style="width:14px;height:14px;vertical-align:middle;"></i>
+            Hint Level — controls how much detail you get
+          </div>
+          <div class="ah-hint-track">
+            <div class="ah-hint-fill" id="ah-hint-fill" style="width:50%;"></div>
+          </div>
+          <div class="ah-hint-steps" id="ah-hint-steps">
+            <span class="ah-hint-step" data-level="0">Nudge</span>
+            <span class="ah-hint-step active" data-level="1">Concept</span>
+            <span class="ah-hint-step" data-level="2">Pseudocode</span>
+          </div>
+          <div class="ah-hint-desc" id="ah-hint-desc">Explains the core idea and relevant data structures/algorithms — no step-by-step logic yet.</div>
+        </div>
+
+        <button class="ah-btn ah-btn-primary" id="ah-submit-btn">
+          <i data-lucide="zap" style="width:16px;height:16px;"></i>
+          Get Conceptual Help
+        </button>
+      </div>
+
+      <!-- Solutions panel -->
+      <div class="ah-panel">
+        <div class="ah-solution-head">
+          <h3 style="margin-bottom:10px;">Conceptual Solution Plan</h3>
+          <button class="ah-export" id="ah-export-btn" disabled>
+            <i data-lucide="download" style="width:12px;height:12px;vertical-align:middle;margin-right:4px;"></i>
+            Export Notes
+          </button>
+        </div>
+        <span class="ah-flag">
+          <i data-lucide="alert-triangle" style="width:12px;height:12px;vertical-align:middle;margin-right:4px;"></i>
+          CONCEPT ONLY — NO RUNNABLE CODE
+        </span>
+
+        <!-- Loader -->
+        <div id="ah-loader" class="ah-loader-wrapper ah-hidden">
+          <div class="spinner"></div>
+          <p>Analyzing problem statement and searching notes database...</p>
+        </div>
+
+        <div id="ah-output-content">
+          <div class="ah-empty" id="ah-empty-state">
+            <i data-lucide="lightbulb" style="width:26px;height:26px;color:#E08A1E;"></i><br>
+            Submit your problem statement on the left. The assistant will map it to your notes, explain the algorithm concept at your chosen hint level, and generate pseudocode.
+          </div>
+
+          <div id="ah-results" class="ah-hidden">
+            <div style="margin-top: 14px;">
+              <span class="ah-label">Approach &amp; Concepts</span>
+              <div id="ah-approach-text" class="pre-wrap-text"></div>
+            </div>
+
+            <div style="margin-top: 14px;" id="ah-pseudocode-section">
+              <span class="ah-label">Abstract Pseudocode</span>
+              <pre><code id="ah-pseudocode-text" class="pre-wrap-code"></code></pre>
+            </div>
+
+            <div style="margin-top: 14px;">
+              <span class="ah-label">Concept Tags</span>
+              <div class="ah-concept-chips" id="ah-concept-chips"></div>
+            </div>
+
+            <div style="margin-top: 14px;">
+              <span class="ah-label">Referenced Lecture Notes</span>
+              <div id="ah-sources" class="pre-wrap-text" style="font-size:12px;color:var(--ah-muted);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

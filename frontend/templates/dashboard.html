@@ -1,0 +1,100 @@
+<div class="view-header">
+    <div>
+        <h2><i data-lucide="layout-dashboard" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"></i> Candidate Dashboard</h2>
+        <p>Welcome to your Placement Prep Hub. Track your tasks, upload preparation materials, and evaluate progress.</p>
+        <div class="hero-badges">
+            <span class="hero-badge">✓ Workspace Hub</span>
+            <span class="hero-badge">✓ Track Prep</span>
+            <span class="hero-badge">✓ Real-time Analytics</span>
+        </div>
+    </div>
+    <div class="hero-illustration"><i data-lucide="trending-up" style="width: 64px; height: 64px; opacity: 0.85;"></i></div>
+</div>
+
+<div class="resume-layout">
+    <!-- Top Welcome Card with Streak -->
+    <div class="glass-card dash-welcome-card" style="margin-bottom: 24px;">
+        <div class="dash-welcome-info">
+            <h3>Welcome back, Candidate! <i data-lucide="rocket" style="width: 24px; height: 24px; vertical-align: middle; margin-left: 4px;"></i></h3>
+            <p>Your next exam countdown and study status are dynamically compiled below.</p>
+        </div>
+        <div class="dash-welcome-metrics">
+            <div class="dash-metric-card">
+                <span class="stat-label"><i data-lucide="flame" style="width: 16px; height: 16px; vertical-align: text-bottom; margin-right: 6px; color: var(--warning-amber);"></i> Study Streak</span>
+                <div class="stat-value" id="dash-streak-val" style="color: var(--warning-amber);">0 Days</div>
+            </div>
+            <div class="dash-metric-card">
+                <span class="stat-label"><i data-lucide="timer" style="width: 16px; height: 16px; vertical-align: text-bottom; margin-right: 6px; color: var(--primary-blue);"></i> Hours Studied</span>
+                <div class="stat-value" id="dash-hours-val" style="color: var(--primary-blue);">0 Hrs</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Middle Stats Grid -->
+    <div class="resume-stats-grid" style="margin-bottom: 24px;">
+        <div class="glass-card dash-stat-card">
+            <div class="dash-stat-icon purple"><i data-lucide="notebook-pen" style="width: 24px; height: 24px;"></i></div>
+            <div class="dash-stat-content">
+                <h4>Indexed Notes</h4>
+                <h3 id="dash-notes-count">0 Files</h3>
+            </div>
+        </div>
+        <div class="glass-card dash-stat-card">
+            <div class="dash-stat-icon blue"><i data-lucide="message-square" style="width: 24px; height: 24px;"></i></div>
+            <div class="dash-stat-content">
+                <h4>Interview Logs</h4>
+                <h3 id="dash-interviews-count">0 Logs</h3>
+            </div>
+        </div>
+        <div class="glass-card dash-stat-card">
+            <div class="dash-stat-icon cyan"><i data-lucide="target" style="width: 24px; height: 24px;"></i></div>
+            <div class="dash-stat-content">
+                <h4>Weak Concepts</h4>
+                <h3 id="dash-weak-count" style="color: var(--danger-rose);">0</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Split Dashboard Panel -->
+    <div class="view-grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+        <!-- Left Side: Quick Upload Actions -->
+        <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column; gap: 18px;">
+            <h3>Quick Ingest Tools</h3>
+            <p class="subtitle">Quickly index new prep documents into your vector DB.</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;">
+                <div class="dash-action-item" onclick="document.querySelector('[data-view=notes]').click()">
+                    <div class="dash-action-icon"><i data-lucide="notebook-pen" style="width: 24px; height: 24px;"></i></div>
+                    <div class="planner-task-details">
+                        <span class="planner-task-title" style="font-weight: 600; color: var(--text-primary);">Upload Subject Notes (PDF, TXT, DOCX)</span>
+                        <span class="planner-task-meta" style="font-size:12px; color: var(--text-secondary);">Add lecture files for Q&A, quizzes, & flashcards.</span>
+                    </div>
+                </div>
+                <div class="dash-action-item" onclick="document.querySelector('[data-view=interview]').click()">
+                    <div class="dash-action-icon"><i data-lucide="message-square" style="width: 24px; height: 24px;"></i></div>
+                    <div class="planner-task-details">
+                        <span class="planner-task-title" style="font-weight: 600; color: var(--text-primary);">Add Company Interview Experience</span>
+                        <span class="planner-task-meta" style="font-size:12px; color: var(--text-secondary);">Ground placement chat & study planner in target questions.</span>
+                    </div>
+                </div>
+                <div class="dash-action-item" onclick="document.querySelector('[data-view=resume]').click()">
+                    <div class="dash-action-icon"><i data-lucide="file-check" style="width: 24px; height: 24px;"></i></div>
+                    <div class="planner-task-details">
+                        <span class="planner-task-title" style="font-weight: 600; color: var(--text-primary);">Analyze Resume Skills</span>
+                        <span class="planner-task-meta" style="font-size:12px; color: var(--text-secondary);">Extract technical keywords and predict target experiences.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Recent Activity Logs -->
+        <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+            <h3>Recent Study Activity</h3>
+            <div class="indexed-files-container" style="max-height: 250px;">
+                <ul id="dash-activity-list" class="indexed-files-list">
+                    <!-- Loaded dynamically -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

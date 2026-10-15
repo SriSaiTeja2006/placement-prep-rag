@@ -1,0 +1,158 @@
+<div class="view-header">
+    <div>
+        <h2><i data-lucide="chart-column" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"></i> AI Analytics Dashboard</h2>
+        <p>Real-time learning metrics, subject preparation levels, and AI-powered placement recommendations.</p>
+        <div class="hero-badges">
+            <span class="hero-badge">✓ Real-time Metrics</span>
+            <span class="hero-badge">✓ Performance Tracking</span>
+            <span class="hero-badge">✓ Placement Coach</span>
+        </div>
+    </div>
+    <div class="fc-card-badges" style="display: flex; gap: 10px;">
+        <button id="analytics-export-csv" class="chat-action-btn" disabled><i data-lucide="download" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Export CSV</button>
+        <button id="analytics-export-pdf" class="chat-action-btn" disabled><i data-lucide="file-bar-chart" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Export Report</button>
+    </div>
+</div>
+
+<!-- Loader -->
+<div id="analytics-loader" class="questions-loader-wrapper hidden">
+    <div class="spinner"></div>
+    <p>Compiling database activity & generating recommendations...</p>
+</div>
+
+<!-- Empty State -->
+<div id="analytics-empty-state" class="quiz-screen-container glass-card" style="padding: 40px; margin-top: 20px; text-align: center; width: 100%;">
+    <div class="quiz-status-icon"><i data-lucide="chart-column" style="width: 48px; height: 48px;"></i></div>
+    <h3>No analytics available yet</h3>
+    <p style="margin-bottom: 20px; font-size: 14px; color: var(--text-secondary);">Start using the platform (upload notes, study AI Tutor concepts, map resume skills, and complete quizzes) to generate preparation insights.</p>
+    <button id="analytics-demo-data-btn" class="generate-plan-btn" style="width: auto; padding: 10px 24px; margin: 0 auto;">
+        <i data-lucide="sparkles" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Load Demo Platform Data
+    </button>
+</div>
+
+<!-- Active Analytics Dashboard -->
+<div id="analytics-active-screen" class="resume-layout hidden" style="width: 100%; display: flex; flex-direction: column; gap: 20px; margin-top: 10px;">
+    
+    <!-- Statistic Cards Row 1 -->
+    <div class="resume-stats-grid">
+        <div class="glass-card resume-stat-card">
+            <span class="resume-stat-label">Docs Uploaded</span>
+            <div class="resume-stat-value" id="card-docs-uploaded">0 Files</div>
+        </div>
+        <div class="glass-card resume-stat-card">
+            <span class="resume-stat-label">Notes Indexed</span>
+            <div class="resume-stat-value" id="card-notes-indexed">0 Chunks</div>
+        </div>
+        <div class="glass-card resume-stat-card">
+            <span class="resume-stat-label">Questions Asked</span>
+            <div class="resume-stat-value" id="card-questions-asked">0 Ask</div>
+        </div>
+        <div class="glass-card resume-stat-card">
+            <span class="resume-stat-label">Quiz Accuracy</span>
+            <div class="resume-stat-value" id="card-quiz-accuracy">0%</div>
+        </div>
+    </div>
+    
+    <!-- Statistic Cards Row 2 -->
+    <div class="resume-stats-grid">
+        <div class="glass-card resume-stat-card">
+            <span class="resume-stat-label">Resume Skills</span>
+            <div class="resume-stat-value" id="card-resume-skills">0 Skills</div>
+        </div>
+        <div class="glass-card resume-stat-card">
+            <span class="resume-stat-label">Active Streak</span>
+            <div class="resume-stat-value" id="card-study-streak" style="color: var(--warning-amber);">0 Days</div>
+        </div>
+        <div class="glass-card resume-stat-card">
+            <span class="resume-stat-label">Total Study Time</span>
+            <div class="resume-stat-value" id="card-study-hours">0.0 Hrs</div>
+        </div>
+        <div class="glass-card resume-stat-card">
+            <span class="resume-stat-label">Readiness Score</span>
+            <div class="resume-stat-value" id="card-readiness-score" style="color: var(--accent-purple);">0%</div>
+        </div>
+    </div>
+
+    <!-- Core Grid Area -->
+    <div class="view-grid" style="grid-template-columns: 1.2fr 1fr; gap: 20px;">
+        <!-- Left Side: AI Insights & Mastery Logs -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <!-- AI Placement Coach recommendations -->
+            <div class="glass-card" style="padding: 24px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <span style="font-size: 24px; display: inline-flex; align-items: center;"><i data-lucide="bot" style="width: 28px; height: 28px;"></i></span>
+                    <h3 style="font-size: 16px;">AI Placement Coach Recommendations</h3>
+                </div>
+                <div style="background: var(--accent-blue-bg); border: 1px dashed var(--accent-blue-border); border-radius: 8px; padding: 16px;">
+                    <ul class="planner-bullet-list" id="analytics-ai-insights-list" style="display: flex; flex-direction: column; gap: 10px;">
+                        <!-- AI suggestions loaded here -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Readiness Score & Streak Activity graph -->
+            <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+                <h3>Active Study Logs & Streak Graph</h3>
+                <div style="height: 250px; width: 100%;">
+                    <canvas id="chart-activity-logs"></canvas>
+                </div>
+            </div>
+
+            <!-- Subject Performance comparison table -->
+            <div class="glass-card" style="padding: 24px;">
+                <h3>Subject Mastery & Analytics</h3>
+                <div class="indexed-files-container" style="max-height: 250px; margin-top: 10px;">
+                    <table class="quiz-history-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Readiness %</th>
+                                <th>Accuracy %</th>
+                                <th>Hours Studied</th>
+                                <th>Mastery Level</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analytics-subject-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Charts breakdown -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Placement Readiness circular ring -->
+            <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;">
+                <h3>AI Placement Readiness Score</h3>
+                <div style="position: relative; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+                    <canvas id="chart-readiness-ring" width="180" height="180"></canvas>
+                    <div style="position: absolute; display: flex; flex-direction: column; align-items: center;">
+                        <span id="ring-score-txt" style="font-size: 34px; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-primary);">0%</span>
+                        <span id="ring-level-txt" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--primary-blue); margin-top: 4px;">Good</span>
+                    </div>
+                </div>
+                <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-top: 10px;">
+                    Your score combines technical resume keywords, quiz accuracy averages, notes completion percentage, and active study consistency metrics.
+                </p>
+            </div>
+
+            <!-- Subject Comparison chart -->
+            <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+                <h3>Subject Accuracy Comparison</h3>
+                <div style="height: 220px; width: 100%;">
+                    <canvas id="chart-subject-comparison"></canvas>
+                </div>
+            </div>
+
+            <!-- Uploads Pie Chart -->
+            <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+                <h3>Document Upload Types</h3>
+                <div style="height: 200px; width: 100%; display: flex; justify-content: center;">
+                    <canvas id="chart-upload-breakdown"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

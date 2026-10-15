@@ -1,0 +1,195 @@
+<div class="tutor-page-wrapper">
+    <style>
+        /* Scoped style overrides for AI Tutor Page */
+        .main-content:has(.tutor-page-wrapper) {
+            height: 100vh !important;
+            max-height: 100vh !important;
+            overflow: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 24px 30px 24px 30px !important;
+            box-sizing: border-box !important;
+        }
+
+        .view-container:has(.tutor-page-wrapper) {
+            height: 100% !important;
+            max-height: 100% !important;
+            min-height: 0 !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+        }
+
+        .tutor-page-wrapper {
+            display: flex !important;
+            flex-direction: column !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            min-height: 0 !important;
+            width: 100% !important;
+            overflow: hidden !important;
+        }
+
+        .tutor-page-wrapper .view-header {
+            flex-shrink: 0 !important;
+            margin-bottom: 16px !important;
+        }
+        
+        .tutor-page-wrapper .stats-grid {
+            flex-shrink: 0 !important;
+            margin-bottom: 20px !important;
+        }
+
+        .tutor-page-wrapper .view-grid {
+            display: grid !important;
+            grid-template-columns: 360px 1fr !important;
+            gap: 24px !important;
+            flex: 1 !important;
+            min-height: 0 !important;
+            height: 100% !important;
+            margin-bottom: 0 !important;
+            overflow: hidden !important;
+        }
+
+        .tutor-page-wrapper .panel-left {
+            height: 100% !important;
+            max-height: 100% !important;
+            overflow-y: auto !important;
+            min-height: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
+            box-sizing: border-box !important;
+        }
+
+        .tutor-page-wrapper .panel-right.tutor-panel {
+            height: 100% !important;
+            max-height: 100% !important;
+            min-height: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        .tutor-page-wrapper .tutor-content {
+            flex: 1 !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            min-height: 0 !important;
+            padding: 20px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+            box-sizing: border-box !important;
+        }
+
+        .tutor-page-wrapper .chat-input-container {
+            flex-shrink: 0 !important;
+            padding: 16px 20px !important;
+            border-top: 1px solid var(--border-color) !important;
+            background: var(--bg-surface) !important;
+        }
+        
+        .tutor-page-wrapper .message-container {
+            max-width: 85% !important;
+            width: fit-content !important;
+            word-break: break-word !important;
+        }
+    </style>
+
+<div class="view-header">
+    <div>
+        <h2><i data-lucide="bot" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"></i> AI Tutor</h2>
+        <p>Understand key placement concepts from your uploaded lecture notes with dynamic study modes.</p>
+        <div class="hero-badges">
+            <span class="hero-badge">✓ Concept Explanations</span>
+            <span class="hero-badge">✓ Interactive Q&A</span>
+            <span class="hero-badge">✓ Multi-level Teaching</span>
+        </div>
+    </div>
+    <div class="hero-illustration"><i data-lucide="bot" style="width: 64px; height: 64px; opacity: 0.85;"></i></div>
+</div>
+
+<!-- Statistics Grid -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-label">Concepts Learned</span>
+        <div class="stat-value" id="tutor-stat-concepts">14</div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Study Time</span>
+        <div class="stat-value" id="tutor-stat-time">4.2 Hrs</div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Sessions Completed</span>
+        <div class="stat-value" id="tutor-stat-sessions">8</div>
+    </div>
+</div>
+
+<div class="view-grid">
+    <!-- Left Column: Tutor Controls -->
+    <div class="panel-left glass-card">
+        <div class="panel-section">
+            <h3>Tutor Settings</h3>
+            <div class="input-group">
+                <label for="tutor-topic-input">Concept or Topic</label>
+                <input type="text" id="tutor-topic-input" placeholder="e.g. Memory Management, Joins, OOP" required>
+            </div>
+            
+            <div class="input-group" style="margin-top: 14px;">
+                <label>Teaching Level</label>
+                <div class="mode-chips-container" id="tutor-difficulty-chips">
+                    <div class="mode-chip" data-difficulty="Beginner">Beginner</div>
+                    <div class="mode-chip active" data-difficulty="Intermediate">Intermediate</div>
+                    <div class="mode-chip" data-difficulty="Advanced">Advanced</div>
+                </div>
+            </div>
+
+            <button id="tutor-explain-btn" class="generate-plan-btn" style="margin-top: 16px;">
+                <i data-lucide="zap" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Ask AI Tutor
+            </button>
+        </div>
+
+        <div class="panel-section separator-top">
+            <h3>Source Citations</h3>
+            <div class="indexed-files-container">
+                <ul id="tutor-sources-list" class="indexed-files-list">
+                    <li class="empty-list-msg">No citations referenced yet.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Explanation & Follow-up Chat -->
+    <div class="panel-right glass-card tutor-panel">
+        <div id="tutor-content-area" class="tutor-content scroll-styled">
+            <div class="ai-message message-container">
+                <div class="message-avatar" style="display: inline-flex; align-items: center; justify-content: center;"><i data-lucide="bot" style="width: 20px; height: 20px;"></i></div>
+                <div class="message-bubble-wrapper">
+                    <div class="message-bubble">
+                        Hello! Enter a topic from your notes on the left, select a learning mode, and I will explain it for you. After explaining, feel free to ask follow-up questions right here.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tutor-loader" class="questions-loader-wrapper hidden">
+            <div class="spinner"></div>
+            <p>AI Tutor is preparing your explanation...</p>
+        </div>
+
+        <!-- Chat Input for Doubts -->
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <textarea id="tutor-chat-input" placeholder="Ask a follow-up doubt about this concept..." rows="1" disabled></textarea>
+                <button id="tutor-send-btn" class="send-btn" disabled>
+                    <span class="send-icon">➔</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

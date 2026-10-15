@@ -1,0 +1,1124 @@
+<style>
+    /* ==========================================================================
+       RESUME MAPPER - LIGHT CORPORATE BLUE THEME (LINKEDIN/STRIPE INSPIRED)
+       ========================================================================== */
+    .resume-theme-wrapper {
+        --primary-blue: #2563EB;
+        --secondary-blue: #1D4ED8;
+        --bg-slate: #F8FAFC;
+        --card-bg: #FFFFFF;
+        --border-color: #E2E8F0;
+        --text-dark: #0F172A;
+        --text-muted-gray: #64748B;
+        --success-green: #10B981;
+        --warning-amber: #F59E0B;
+        --danger-rose: #EF4444;
+
+        color: var(--text-dark);
+        font-family: 'Inter', sans-serif;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        transition: var(--transition-smooth);
+    }
+
+    .resume-theme-wrapper h1, 
+    .resume-theme-wrapper h2, 
+    .resume-theme-wrapper h3, 
+    .resume-theme-wrapper h4, 
+    .resume-theme-wrapper h5 {
+        color: var(--text-dark);
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+    }
+
+    /* Hero Section */
+    .resume-hero-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+        border: 1px solid #BFDBFE;
+        border-radius: var(--border-radius-lg);
+        padding: 24px; /* Normalized padding */
+        position: relative;
+        overflow: hidden;
+    }
+
+    .resume-hero-content {
+        max-width: 65%;
+    }
+
+    .resume-hero-content h2 {
+        font-size: 32px;
+        color: var(--primary-blue);
+        margin-bottom: 8px;
+    }
+
+    .resume-hero-content p {
+        color: var(--text-muted-gray);
+        font-size: 15px;
+        line-height: 1.5;
+        margin-bottom: 16px;
+    }
+
+    .resume-feature-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .resume-badge {
+        background: var(--card-bg);
+        border: 1px solid #BFDBFE;
+        color: var(--primary-blue);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .resume-hero-illustration {
+        font-size: 80px;
+        filter: drop-shadow(0 8px 16px rgba(37, 99, 235, 0.2));
+        user-select: none;
+    }
+
+    /* Top Stats Grid */
+    .resume-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px; /* Normalized gap */
+    }
+
+    .resume-stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-md);
+        padding: 20px; /* Normalized padding */
+        text-align: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        transition: var(--transition-smooth);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    .resume-stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: #BFDBFE;
+    }
+
+    .resume-stat-label {
+        font-size: 11px;
+        color: var(--text-muted-gray);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    .resume-stat-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-top: 4px;
+    }
+
+    /* Upload & Empty State Container */
+    .resume-upload-container {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 20px; /* Normalized gap */
+    }
+
+    .resume-empty-tips-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .resume-tips-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .resume-tips-list li {
+        font-size: 13px;
+        color: var(--text-muted-gray);
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .resume-tips-list li::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--primary-blue);
+    }
+
+    /* Premium Upload Card */
+    .resume-premium-upload-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 32px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        position: relative;
+    }
+
+    .resume-premium-dropzone {
+        border: 2px dashed #BFDBFE;
+        background: #F8FAFC;
+        border-radius: var(--border-radius-md);
+        padding: 36px 20px;
+        width: 100%;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .resume-premium-dropzone.dragover {
+        border-color: var(--primary-blue);
+        background: #EFF6FF;
+    }
+
+    .resume-premium-dropzone:hover {
+        border-color: var(--primary-blue);
+        background: #EFF6FF;
+    }
+
+    .resume-upload-text {
+        font-size: 14px;
+        color: var(--text-dark);
+    }
+
+    .resume-browse-btn {
+        color: var(--primary-blue);
+        font-weight: 600;
+        text-decoration: underline;
+    }
+
+    .resume-filename-preview {
+        background: #EFF6FF;
+        border: 1px solid #BFDBFE;
+        color: var(--primary-blue);
+        padding: 8px 16px;
+        border-radius: var(--border-radius-sm);
+        font-size: 13px;
+        font-weight: 500;
+        margin-top: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Standardized Card Style */
+    .resume-dashboard-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .resume-card-header {
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .resume-card-header h3 {
+        font-size: 16px;
+        color: var(--text-dark);
+    }
+
+    /* Grid Layout */
+    .resume-dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .resume-left-col {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* Sticky Right Sidebar */
+    .resume-right-sidebar {
+        position: sticky;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .resume-sidebar-score-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #EFF6FF;
+        border: 1px solid #BFDBFE;
+        border-radius: var(--border-radius-md);
+        padding: 16px;
+    }
+
+    .resume-sidebar-score-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .resume-sidebar-score-item span {
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .resume-sidebar-score-item strong {
+        font-size: 18px;
+        color: var(--primary-blue);
+    }
+
+    /* Skill detection card grid */
+    .resume-skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+    }
+
+    .resume-skill-card {
+        border: 1px solid var(--border-color);
+        background: var(--card-bg);
+        border-radius: var(--border-radius-md);
+        padding: 14px;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+    }
+
+    .resume-skill-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--primary-blue);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    }
+
+    .resume-skill-card.active {
+        border-color: var(--primary-blue);
+        background: #EFF6FF;
+        box-shadow: 0 0 0 2px var(--primary-blue);
+    }
+
+    .resume-skill-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: var(--text-muted-gray);
+    }
+
+    .resume-skill-category {
+        background: #F1F5F9;
+        color: var(--text-muted-gray);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+
+    /* Details Rows */
+    .resume-details-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 24px;
+    }
+
+    .resume-details-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 13px;
+    }
+
+    .resume-details-item span {
+        color: var(--text-muted-gray);
+        font-weight: 500;
+    }
+
+    .resume-details-item strong {
+        color: var(--text-dark);
+    }
+
+    /* Missing Skills & Recommendations */
+    .resume-missing-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .resume-missing-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        background: #FFFBEB;
+        border: 1px solid #FDE68A;
+        border-radius: var(--border-radius-md);
+    }
+
+    .resume-priority-badge {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 4px;
+    }
+
+    .resume-priority-badge.high {
+        background: #FEE2E2;
+        color: var(--danger-rose);
+    }
+
+    .resume-priority-badge.medium {
+        background: #FEF3C7;
+        color: var(--warning-amber);
+    }
+
+    .resume-priority-badge.low {
+        background: #EFF6FF;
+        color: var(--primary-blue);
+    }
+
+    /* Timeline Section */
+    .resume-timeline-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        padding: 20px 0;
+        margin-top: 10px;
+    }
+
+    .resume-timeline-line {
+        position: absolute;
+        top: 50%;
+        left: 5%;
+        right: 5%;
+        height: 2px;
+        background: var(--border-color);
+        z-index: 1;
+        transform: translateY(-50%);
+    }
+
+    .resume-timeline-progress {
+        position: absolute;
+        top: 50%;
+        left: 5%;
+        width: 0%;
+        height: 2px;
+        background: var(--primary-blue);
+        z-index: 1;
+        transform: translateY(-50%);
+        transition: width 0.3s ease;
+    }
+
+    .resume-timeline-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        z-index: 2;
+        position: relative;
+        background: var(--bg-slate);
+        padding: 0 10px;
+    }
+
+    .resume-timeline-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--card-bg);
+        border: 2px solid var(--border-color);
+        transition: var(--transition-smooth);
+    }
+
+    .resume-timeline-step.active .resume-timeline-dot {
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
+    }
+
+    .resume-timeline-step.completed .resume-timeline-dot {
+        background: var(--success-green);
+        border-color: var(--success-green);
+    }
+
+    .resume-timeline-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text-muted-gray);
+    }
+
+    .resume-timeline-step.active .resume-timeline-label {
+        color: var(--primary-blue);
+        font-weight: 600;
+    }
+
+    /* Action Buttons in Sidebar */
+    .resume-actions-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .resume-action-btn {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-dark);
+        padding: 12px;
+        border-radius: var(--border-radius-md);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+        transition: var(--transition-smooth);
+    }
+
+    .resume-action-btn:hover {
+        background: #EFF6FF;
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+    }
+
+    .resume-action-btn.primary {
+        background: var(--primary-blue);
+        color: var(--card-bg);
+        border: none;
+    }
+
+    .resume-action-btn.primary:hover {
+        background: var(--secondary-blue);
+        color: var(--card-bg);
+    }
+
+    /* Loader Styling */
+    .resume-premium-loader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 60px 20px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+    }
+
+    /* Q&A Cards style */
+    .resume-qa-card {
+        border: 1px solid var(--border-color);
+        background: var(--card-bg);
+        border-radius: var(--border-radius-md);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition: var(--transition-smooth);
+    }
+
+    .resume-qa-card:hover {
+        border-color: #BFDBFE;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .resume-qa-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .resume-qa-difficulty {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    .resume-qa-difficulty.easy {
+        background: #E8F5E9;
+        color: var(--success-green);
+    }
+
+    .resume-qa-difficulty.medium {
+        background: #FFF8E1;
+        color: var(--warning-amber);
+    }
+
+    .resume-qa-difficulty.hard {
+        background: #FFEBEE;
+        color: var(--danger-rose);
+    }
+
+    .resume-qa-actions {
+        display: flex;
+        gap: 10px;
+        border-top: 1px solid var(--border-color);
+        padding-top: 10px;
+        justify-content: flex-end;
+    }
+
+    .resume-qa-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted-gray);
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: var(--transition-fast);
+    }
+
+    .resume-qa-btn:hover {
+        color: var(--primary-blue);
+    }
+
+    .learning-path-btn {
+        background: var(--primary-blue);
+        border: none;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition-fast);
+    }
+
+    .learning-path-btn:hover {
+        background: var(--secondary-blue);
+    }
+
+    /* Projects list style */
+    .resume-project-card {
+        border: 1px solid var(--border-color);
+        background: var(--card-bg);
+        border-radius: var(--border-radius-md);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* ==========================================================================
+       RESUME MAPPER - DARK THEME OVERRIDES
+       ========================================================================== */
+    [data-theme="dark"] .resume-theme-wrapper {
+        --primary-blue: #3B82F6;
+        --secondary-blue: #60A5FA;
+        --bg-slate: #0A0A0A;
+        --card-bg: #181818;
+        --border-color: #2A2A2A;
+        --text-dark: #FAFAFA;
+        --text-muted-gray: #A1A1AA;
+
+        background-color: var(--bg-slate);
+        color: var(--text-dark);
+        border-color: var(--border-color);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="dark"] .resume-theme-wrapper h1,
+    [data-theme="dark"] .resume-theme-wrapper h2,
+    [data-theme="dark"] .resume-theme-wrapper h3,
+    [data-theme="dark"] .resume-theme-wrapper h4,
+    [data-theme="dark"] .resume-theme-wrapper h5 {
+        color: var(--text-dark);
+    }
+
+    /* Hero */
+    [data-theme="dark"] .resume-hero-section {
+        background: linear-gradient(135deg, #181818 0%, #0F0F0F 100%);
+        border-color: #2A2A2A;
+    }
+    [data-theme="dark"] .resume-hero-content h2 {
+        color: #FFFFFF;
+    }
+    [data-theme="dark"] .resume-badge {
+        background: rgba(59, 130, 246, 0.08);
+        border-color: rgba(59, 130, 246, 0.2);
+        color: #60A5FA;
+    }
+
+    /* Stats */
+    [data-theme="dark"] .resume-stat-card:hover {
+        border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    /* Dropzone */
+    [data-theme="dark"] .resume-premium-dropzone {
+        background: #111111;
+        border-color: #2A2A2A;
+    }
+    [data-theme="dark"] .resume-premium-dropzone:hover,
+    [data-theme="dark"] .resume-premium-dropzone.dragover {
+        background: rgba(59, 130, 246, 0.05);
+        border-color: rgba(59, 130, 246, 0.35);
+    }
+    [data-theme="dark"] .resume-upload-text {
+        color: #A1A1AA;
+    }
+
+    /* File name preview */
+    [data-theme="dark"] .resume-filename-preview {
+        background: rgba(59, 130, 246, 0.08);
+        border-color: rgba(59, 130, 246, 0.2);
+        color: #60A5FA;
+    }
+
+    /* Score row panel */
+    [data-theme="dark"] .resume-sidebar-score-row {
+        background: rgba(59, 130, 246, 0.06);
+        border-color: rgba(59, 130, 246, 0.15);
+    }
+    [data-theme="dark"] .resume-sidebar-score-item strong {
+        color: #60A5FA;
+    }
+
+    /* Skill cards */
+    [data-theme="dark"] .resume-skill-card.active {
+        background: rgba(59, 130, 246, 0.08);
+        border-color: #3B82F6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+    [data-theme="dark"] .resume-skill-category {
+        background: #2A2A2A;
+        color: #A1A1AA;
+    }
+    [data-theme="dark"] .resume-skill-card:hover {
+        border-color: rgba(59, 130, 246, 0.4);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+    }
+
+    /* Missing skills */
+    [data-theme="dark"] .resume-missing-row {
+        background: rgba(245, 158, 11, 0.06);
+        border-color: rgba(245, 158, 11, 0.2);
+    }
+    [data-theme="dark"] .resume-priority-badge.high {
+        background: rgba(239, 68, 68, 0.12);
+        color: #F87171;
+    }
+    [data-theme="dark"] .resume-priority-badge.medium {
+        background: rgba(245, 158, 11, 0.12);
+        color: #FCD34D;
+    }
+    [data-theme="dark"] .resume-priority-badge.low {
+        background: rgba(59, 130, 246, 0.12);
+        color: #60A5FA;
+    }
+
+    /* QA difficulty badges */
+    [data-theme="dark"] .resume-qa-difficulty.easy {
+        background: rgba(34, 197, 94, 0.12);
+        color: #4ADE80;
+    }
+    [data-theme="dark"] .resume-qa-difficulty.medium {
+        background: rgba(245, 158, 11, 0.12);
+        color: #FCD34D;
+    }
+    [data-theme="dark"] .resume-qa-difficulty.hard {
+        background: rgba(239, 68, 68, 0.12);
+        color: #F87171;
+    }
+    [data-theme="dark"] .resume-qa-card:hover {
+        border-color: rgba(59, 130, 246, 0.3);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Action buttons */
+    [data-theme="dark"] .resume-action-btn {
+        background: #1E1E1E;
+        border-color: #333333;
+        color: #E5E5E5;
+    }
+    [data-theme="dark"] .resume-action-btn:hover {
+        background: rgba(59, 130, 246, 0.08);
+        border-color: rgba(59, 130, 246, 0.3);
+        color: #60A5FA;
+    }
+    [data-theme="dark"] .resume-action-btn.primary {
+        background: #FFFFFF;
+        color: #0A0A0A;
+        border: none;
+    }
+    [data-theme="dark"] .resume-action-btn.primary:hover {
+        background: #E5E5E5;
+    }
+
+    /* Timeline */
+    [data-theme="dark"] .resume-timeline-step {
+        background: #0A0A0A;
+    }
+    [data-theme="dark"] .resume-timeline-dot {
+        background: #1E1E1E;
+        border-color: #333333;
+    }
+    [data-theme="dark"] .resume-timeline-step.active .resume-timeline-dot {
+        background: #3B82F6;
+        border-color: #3B82F6;
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+    }
+    [data-theme="dark"] .resume-timeline-step.active .resume-timeline-label {
+        color: #60A5FA;
+    }
+
+    /* Learning path btn */
+    [data-theme="dark"] .learning-path-btn {
+        background: #FFFFFF;
+        color: #0A0A0A;
+    }
+    [data-theme="dark"] .learning-path-btn:hover {
+        background: #E5E5E5;
+    }
+
+    /* Load Example Resume / Tips card */
+    [data-theme="dark"] .resume-empty-tips-card {
+        background: #181818;
+        border-color: #2A2A2A;
+    }
+    [data-theme="dark"] .resume-tips-list li {
+        color: #A1A1AA;
+    }
+</style>
+
+
+<div class="resume-theme-wrapper">
+    <!-- Hero Section -->
+    <div class="resume-hero-section">
+        <div class="resume-hero-content">
+            <h2><i data-lucide="file-check" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"></i> AI Resume Mapper</h2>
+            <p>Upload your resume and let AI analyze your skills, identify strengths, detect missing technologies, and generate company-specific interview questions.</p>
+            <div class="resume-feature-badges">
+                <span class="resume-badge">✓ AI Skill Detection</span>
+                <span class="resume-badge">✓ Resume Analysis</span>
+                <span class="resume-badge">✓ Interview Questions</span>
+                <span class="resume-badge">✓ ATS Friendly</span>
+                <span class="resume-badge">✓ Career Suggestions</span>
+            </div>
+        </div>
+        <div class="resume-hero-illustration"><i data-lucide="chart-column" style="width: 64px; height: 64px; opacity: 0.85;"></i></div>
+    </div>
+
+    <!-- Empty/Upload State Grid -->
+    <div id="resume-empty-state" class="resume-upload-container">
+        <!-- Premium Upload Card -->
+        <div class="resume-premium-upload-card">
+            <div id="resume-dropzone" class="resume-premium-dropzone">
+                <span class="upload-icon" style="font-size: 40px; display: inline-flex; align-items: center; justify-content: center;"><i data-lucide="upload" style="width: 48px; height: 48px;"></i></span>
+                <span class="resume-upload-text">Drag & drop your Resume PDF/TXT/DOCX here or <span class="resume-browse-btn">browse</span></span>
+                <input type="file" id="resume-file-input" accept=".pdf,.txt,.docx" class="hidden-file-input">
+            </div>
+            
+            <div id="resume-filename-display" class="resume-filename-preview hidden">
+                <span style="font-size: 16px; display: inline-flex; align-items: center; margin-right: 6px;"><i data-lucide="file-text" style="width: 18px; height: 18px;"></i></span>
+                <span id="resume-display-name">Selected File</span>
+            </div>
+
+            <div id="resume-upload-progress" class="upload-progress-container hidden" style="width: 100%;">
+                <div class="progress-bar-wrapper">
+                    <div id="resume-progress-bar" class="progress-bar"></div>
+                </div>
+                <div class="progress-status">
+                    <span id="resume-progress-text">Analyzing resume... 0%</span>
+                </div>
+            </div>
+
+            <div id="resume-upload-message" class="alert-message hidden" style="width: 100%;"></div>
+        </div>
+
+        <!-- Empty state Tips Card -->
+        <div class="resume-empty-tips-card">
+            <h3>Getting Started Tips</h3>
+            <ul class="resume-tips-list">
+                <li>Make sure your file is text-readable (not a scanned image PDF) for best skill extraction.</li>
+                <li>Support formats: <strong>PDF, DOCX, TXT</strong> up to <strong>10 MB</strong> max file size.</li>
+                <li>We verify formatting against ATS systems like Workday, Taleo, and Greenhouse.</li>
+                <li>Include quantifiable metrics in your experiences to boost your AI Resume Score.</li>
+            </ul>
+            <div style="margin-top: auto; display: flex; gap: 10px;">
+                <button class="resume-action-btn" id="resume-load-example-btn" style="flex: 1;"><i data-lucide="folder-open" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Load Example Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Analysis Timeline (Visible during analysis) -->
+    <div id="resume-analysis-timeline" class="resume-dashboard-card hidden">
+        <div class="resume-card-header">
+            <h3>AI Analysis Status</h3>
+            <span id="resume-timeline-status" style="font-size: 13px; font-weight: 500; color: var(--primary-blue);">Parsing Resume...</span>
+        </div>
+        <div class="resume-timeline-container">
+            <div class="resume-timeline-line"></div>
+            <div id="resume-timeline-progress" class="resume-timeline-progress"></div>
+            
+            <div class="resume-timeline-step active" id="step-uploading">
+                <div class="resume-timeline-dot"></div>
+                <span class="resume-timeline-label">Uploading</span>
+            </div>
+            <div class="resume-timeline-step" id="step-parsing">
+                <div class="resume-timeline-dot"></div>
+                <span class="resume-timeline-label">Parsing Resume</span>
+            </div>
+            <div class="resume-timeline-step" id="step-extracting">
+                <div class="resume-timeline-dot"></div>
+                <span class="resume-timeline-label">Extracting Skills</span>
+            </div>
+            <div class="resume-timeline-step" id="step-searching">
+                <div class="resume-timeline-dot"></div>
+                <span class="resume-timeline-label">Searching Database</span>
+            </div>
+            <div class="resume-timeline-step" id="step-generating">
+                <div class="resume-timeline-dot"></div>
+                <span class="resume-timeline-label">Generating Questions</span>
+            </div>
+            <div class="resume-timeline-step" id="step-complete">
+                <div class="resume-timeline-dot"></div>
+                <span class="resume-timeline-label">Complete</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Results Dashboard -->
+    <div id="resume-results-section" class="hidden">
+        <!-- Top Statistics Grid -->
+        <div class="resume-stats-grid" style="margin-bottom: 24px;">
+            <div class="resume-stat-card">
+                <span class="resume-stat-label">Resume Score</span>
+                <div class="resume-stat-value" id="stat-resume-score">0</div>
+            </div>
+            <div class="resume-stat-card">
+                <span class="resume-stat-label">ATS Score</span>
+                <div class="resume-stat-value" id="stat-ats-score">0</div>
+            </div>
+            <div class="resume-stat-card">
+                <span class="resume-stat-label">Skills Found</span>
+                <div class="resume-stat-value" id="stat-skills-found">0</div>
+            </div>
+            <div class="resume-stat-card">
+                <span class="resume-stat-label">Questions Generated</span>
+                <div class="resume-stat-value" id="stat-questions-generated">0</div>
+            </div>
+            <div class="resume-stat-card">
+                <span class="resume-stat-label">Projects Detected</span>
+                <div class="resume-stat-value" id="stat-projects-detected">0</div>
+            </div>
+            <div class="resume-stat-card">
+                <span class="resume-stat-label">Certifications</span>
+                <div class="resume-stat-value" id="stat-certifications">0</div>
+            </div>
+        </div>
+
+        <!-- Grid layout: Left column & Right sticky sidebar -->
+        <div class="resume-dashboard-grid">
+            <!-- Left Column Content -->
+            <div class="resume-left-col">
+                <!-- Resume Summary Card -->
+                <div class="resume-dashboard-card">
+                    <div class="resume-card-header">
+                        <h3>Resume Overview</h3>
+                        <span class="resume-badge" id="overview-exp-level">Level: Unknown</span>
+                    </div>
+                    <div class="resume-details-list">
+                        <div class="resume-details-item">
+                            <span>Candidate Name</span>
+                            <strong id="overview-name">Candidate Name</strong>
+                        </div>
+                        <div class="resume-details-item">
+                            <span>Detected Role</span>
+                            <strong id="overview-role">Detected Role</strong>
+                        </div>
+                        <div class="resume-details-item">
+                            <span>Confidence Score</span>
+                            <strong id="overview-confidence">0%</strong>
+                        </div>
+                        <div class="resume-details-item">
+                            <span>Languages Detected</span>
+                            <strong id="overview-languages">English</strong>
+                        </div>
+                        <div class="resume-details-item">
+                            <span>Detected Projects</span>
+                            <strong id="overview-projects-count">0 Projects</strong>
+                        </div>
+                        <div class="resume-details-item">
+                            <span>Certifications Found</span>
+                            <strong id="overview-certifications-count">0 Found</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Detection Card -->
+                <div class="resume-dashboard-card">
+                    <div class="resume-card-header">
+                        <h3>Skill Detection</h3>
+                        <div class="search-input-wrapper" style="width: 250px;">
+                            <span class="search-icon"><i data-lucide="search" style="width: 14px; height: 14px;"></i></span>
+                            <input type="text" id="resume-skill-search" placeholder="Search detected skills..." style="padding-top:8px; padding-bottom:8px;">
+                        </div>
+                    </div>
+                    <p class="subtitle" style="margin-top: -8px; color: var(--text-muted-gray); font-size: 13px;">Click on a skill card to view associated predicted interview questions.</p>
+                    <div id="skills-chips-container" class="resume-skills-grid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Interview Questions Panel -->
+                <div class="resume-dashboard-card">
+                    <div class="resume-card-header">
+                        <h3>Predicted Interview Questions</h3>
+                        <strong id="selected-skill-title" style="color: var(--primary-blue); font-size: 14px;">Select a skill to begin</strong>
+                    </div>
+                    <div id="questions-loader" class="questions-loader-wrapper hidden">
+                        <div class="spinner"></div>
+                        <p>Generating custom questions from company histories...</p>
+                    </div>
+                    <div id="questions-output-container" style="display: flex; flex-direction: column; gap: 12px;">
+                        <div id="questions-list" style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- Dynamically populated qa card items -->
+                            <div class="empty-questions-msg">No skill selected. Click on any of the detected skills above to load questions.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Analysis Card -->
+                <div class="resume-dashboard-card">
+                    <div class="resume-card-header">
+                        <h3>Project Analysis</h3>
+                    </div>
+                    <div id="resume-projects-list" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Dynamically generated projects -->
+                    </div>
+                </div>
+
+                <!-- Missing Skills Card -->
+                <div class="resume-dashboard-card">
+                    <div class="resume-card-header">
+                        <h3>Recommended Missing Skills</h3>
+                    </div>
+                    <div class="resume-missing-list" id="resume-missing-skills-list">
+                        <!-- Recommended missing skills -->
+                    </div>
+                </div>
+
+                <!-- Career Insights Recommendations -->
+                <div class="resume-dashboard-card">
+                    <div class="resume-card-header">
+                        <h3>AI Career Insights</h3>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h5 style="margin-bottom: 10px; font-size: 13px; color: var(--text-muted-gray); text-transform: uppercase;">Suggestions for Improvement</h5>
+                            <ul class="resume-tips-list" id="resume-career-suggestions">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="margin-bottom: 10px; font-size: 13px; color: var(--text-muted-gray); text-transform: uppercase;">Placement Target Matching</h5>
+                            <div style="display: flex; flex-direction: column; gap: 8px;" id="resume-companies-matching">
+                                <!-- Matching companies list -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky Right Sidebar -->
+            <div class="resume-right-sidebar">
+                <div class="resume-dashboard-card">
+                    <div class="resume-card-header" style="border-bottom: none; padding-bottom: 0;">
+                        <h3>Overall Assessment</h3>
+                    </div>
+                    <div class="resume-sidebar-score-row">
+                        <div class="resume-sidebar-score-item">
+                            <span>Resume Score</span>
+                            <strong id="sidebar-resume-score">0/100</strong>
+                        </div>
+                        <div class="resume-sidebar-score-item">
+                            <span>ATS Compatibility</span>
+                            <strong id="sidebar-ats-score">0%</strong>
+                        </div>
+                        <div class="resume-sidebar-score-item">
+                            <span>Placement Readiness</span>
+                            <strong id="sidebar-placement-score">0%</strong>
+                        </div>
+                    </div>
+                    <div class="resume-details-list" style="grid-template-columns: 1fr; gap: 8px;">
+                        <div class="resume-details-item">
+                            <span>Top Core Skill</span>
+                            <strong id="sidebar-top-skill">None</strong>
+                        </div>
+                        <div class="resume-details-item">
+                            <span>Missing Core Skill</span>
+                            <strong id="sidebar-missing-skill">None</strong>
+                        </div>
+                        <div class="resume-details-item">
+                            <span>Recommended Match</span>
+                            <strong id="sidebar-recommended-company">None</strong>
+                        </div>
+                        <div class="resume-details-item">
+                            <span>Last Updated</span>
+                            <strong id="sidebar-last-updated">Just now</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons Card -->
+                <div class="resume-dashboard-card">
+                    <div class="resume-card-header" style="border-bottom: none; padding-bottom: 0;">
+                        <h3>AI Actions</h3>
+                    </div>
+                    <div class="resume-actions-panel">
+                        <button class="resume-action-btn primary" id="btn-download-analysis"><i data-lucide="download" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Download Analysis Report</button>
+                        <button class="resume-action-btn" id="btn-generate-pdf"><i data-lucide="file-text" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Download PDF Report</button>
+                        <button class="resume-action-btn" id="btn-study-planner"><i data-lucide="calendar-days" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Add Skills to Study Planner</button>
+                        <button class="resume-action-btn" id="btn-generate-quiz"><i data-lucide="clipboard-check" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Generate Quiz for Skills</button>
+                        <button class="resume-action-btn" id="btn-generate-flashcards"><i data-lucide="brain" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i> Generate Flashcards</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
